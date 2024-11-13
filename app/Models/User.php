@@ -12,17 +12,33 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    protected $table = 'users';
+    protected $primaryKey = 'id';
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'middle_name',
+        'last_name',
         'email',
         'password',
+        'address',
+        'phone_no',
+        'gender',
+        'role_type'
     ];
-
+    public function events()
+    {
+        return $this->hasMany(Events::class, 'organizer');
+    }
+    public function organizer()
+    {
+        return $this->belongsTo(User::class, 'organizer');
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

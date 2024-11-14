@@ -23,34 +23,34 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-      body {
-          font-family: 'Poppins', sans-serif;
-          background-color: #f8f9fa;
-      }
-      .navbar-brand {
-          font-weight: 600;
-      }
-      .card-header {
-          font-weight: 500;
-          font-size: 1.2rem;
-      }
-      .btn-success {
-          background-color: #28a745;
-          border: none;
-      }
-      .list-group-item {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-      }
-      .list-group-item h6 {
-          font-weight: 500;
-      }
-      .footer-text {
-          font-size: 0.9rem;
-      }
-      .container {
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .navbar-brand {
+            font-weight: 600;
+        }
+        .card-header {
+            font-weight: 500;
+            font-size: 1.2rem;
+        }
+        .btn-success {
+            background-color: #28a745;
+            border: none;
+        }
+        .list-group-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .list-group-item h6 {
+            font-weight: 500;
+        }
+        .footer-text {
+            font-size: 0.9rem;
+        }
+        .container {
             max-width: 1000px;
         }
 
@@ -121,7 +121,6 @@
             background-color: #c82333;
             border-color: #c82333;
         }
-        <style>
         .weekdays {
             font-weight: bold;
             text-align: center;
@@ -146,7 +145,6 @@
             color: #6c757d;
         }
     </style>
-  </style>
 </head>
 <body>
 

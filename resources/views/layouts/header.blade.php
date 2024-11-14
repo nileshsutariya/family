@@ -124,119 +124,144 @@
 </head>
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-          <a class="navbar-brand" href="#"><i class="fas fa-tree"></i> Family Tree Admin</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-              <ul class="navbar-nav ms-auto">
-                  <li class="nav-item">
-                      <a class="nav-link" href="{{route('admin.dashboard')}}"><i class="fas fa-tachometer-alt"></i> Dashboard </a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#addEventModal">
-                          <i class="fas fa-plus-circle"></i> Add Event
-                      </a>
-                  </li>
-                  <div class="modal fade" id="addEventModal" tabindex="-1" aria-labelledby="addEventModalLabel" aria-hidden="true">
-                      <div class="modal-dialog">
-                          <div class="modal-content" style="background-image: linear-gradient(to right, lavender, white);">
-                              <div class="modal-header">
-                                  <div class="card-header">
-                                      <i class="fas fa-calendar-plus"></i> Add New Event
-                                  </div>                                    
-                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                {{-- @if (isset($events))
-                                    <form action="{{ route('event.update') }}" method="post" enctype="multipart/form-data">
-                                @else --}}
-                                    {{-- <form action="{{ route('event.store') }}" method="post" enctype="multipart/form-data"> --}}
-                                {{-- @endif --}}
-                                  <form action="{{route('event.store')}}" method="POST" enctype="multipart/form-data">
-                                      @csrf
-                                      <div class="row">
-                                          <div class="mb-3">
-                                              <label for="title" class="form-label">Event Title</label>
-                                              <input type="text" class="form-control" id="title" name="title">
-                                          </div>
-                                          <div class="col-md-6">
-                                              <div class="mb-3">
-                                                  <label for="event_date" class="form-label">Event Date</label>
-                                                  <input type="date" class="form-control" id="event_date" name="event_date" >
-                                              </div>
-                                          </div>
-                                          <div class="col-md-6">
-                                              <div class="mb-3">
-                                                  <label for="event_time" class="form-label">Event Time</label>
-                                                  <input type="time" class="form-control" id="event_time" name="event_time" >
-                                              </div>
-                                          </div>
-                                          <div class="mb-3">
-                                              <label for="event_adddress" class="form-label">Address</label>
-                                              <textarea type="text" class="form-control" id="event_address" name="event_address"></textarea>
-                                          </div>
-                                          <div class="mb-3">
-                                            <label for="organizer" class="form-label">Organizer</label>
-                                            <select name="organizer" id="organizer" class="form-control mt-1">
-                                                <option value="">-- Select Organizer --</option>
-                                                @foreach ($users as $user)
-                                                    <option value="{{ $user->id }}">{{ $user->first_name ?? 'No First Name' }}</option>
-                                                @endforeach
-                                            </select>
-                                          </div>
-                                          <div class="mb-3">
-                                            <label for="notes" class="form-label">Notes</label>
-                                            <textarea type="text" class="form-control" id="notes" name="notes"></textarea>
-                                          </div>
-                                          <div class="col-md-6">
-                                              <div class="mb-3">
-                                                  <label for="banner" class="form-label">Banner</label>
-                                                  <input type="file" class="form-control" id="banner" name="banner">
-                                              </div>
-                                          </div>
-                                          <div class="col-md-6">
-                                              <div class="form-group mb-3">
-                                                  <label for="dropdown" class="form-label">Event Status : </label>
-                                                  <select id="event_status" class="form-control" name="event_status">
-                                                      <option value="" disabled selected> -- Select an option -- </option>
-                                                      <option value="0">Upcoming</option>
-                                                      <option value="1">Ongoing</option>
-                                                      <option value="2">Completed</option>
-                                                      <option value="3">Cancelled</option>
-                                                  </select>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <div class="modal-footer">
-                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                          <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Add Event</button>
-                                      </div>
-                                  </form>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><i class="fas fa-tree"></i> Family Tree Admin</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('admin.dashboard')}}"><i class="fas fa-tachometer-alt"></i> Dashboard </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#addEventModal">
+                            <i class="fas fa-plus-circle"></i> Add Event
+                        </a>
+                    </li>
+                    <div class="modal fade" id="addEventModal" tabindex="-1" aria-labelledby="addEventModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content" style="background-image: linear-gradient(to right, lavender, white);">
+                                <div class="modal-header">
+                                    <div class="card-header">
+                                        <i class="fas fa-calendar-plus"></i> Add New Event
+                                    </div>                                    
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{{route('event.store')}}" method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="row">
+                                            <div class="mb-3">
+                                                <label for="title" class="form-label">Event Title</label>
+                                                <input type="text" class="form-control" id="title" name="title" value="{{old('title')}}">
+                                                @error('title')
+                                                <span class="text-danger">
+                                                    {{ $message }}
+                                                </span>
+                                                @enderror
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="event_date" class="form-label">Event Date</label>
+                                                    <input type="date" class="form-control" id="event_date" name="event_date" value="{{old('event_date')}}">
+                                                    @error('event_date')
+                                                        <span class="text-danger">
+                                                            {{ $message }}
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="event_time" class="form-label">Event Time</label>
+                                                    <input type="time" class="form-control" id="event_time" name="event_time" value="{{old('event_time')}}">
+                                                    @error('event_time')
+                                                        <span class="text-danger">
+                                                            {{ $message }}
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="event_adddress" class="form-label">Address</label>
+                                                <textarea type="text" class="form-control" id="event_address" name="event_address">{{old('event_address')}}</textarea>
+                                                @error('event_address')
+                                                    <span class="text-danger">
+                                                        {{ $message }}
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="organizer" class="form-label">Organizer</label>
+                                                <select name="organizer" id="organizer" class="form-control mt-1">
+                                                    <option value="">-- Select Organizer --</option>
+                                                    @foreach ($users as $user)
+                                                        <option value="{{ $user->id }}" {{ old('organizer') == 1 ? 'selected' : '' }}>{{ $user->first_name ?? 'No First Name' }}</option>
+                                                    @endforeach
+                                                </select>
+                                                @error('organizer')
+                                                    <span class="text-danger">
+                                                        {{ $message }}
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="notes" class="form-label">Notes</label>
+                                                <textarea type="text" class="form-control" id="notes" name="notes">{{old('notes')}}</textarea>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="banner" class="form-label">Banner</label>
+                                                    <input type="file" class="form-control" id="banner" name="banner" value="{{old('banner')}}">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group mb-3">
+                                                    <label for="dropdown" class="form-label">Event Status : </label>
+                                                    <select id="event_status" class="form-control" name="event_status">
+                                                        <option value="" disabled selected> -- Select an option -- </option>
+                                                        <option value="0" {{ old('event_status') == 0 ? 'selected' : '' }}>Upcoming</option>
+                                                        <option value="1" {{ old('event_status') == 1 ? 'selected' : '' }}>Ongoing</option>
+                                                        <option value="2" {{ old('event_status') == 2 ? 'selected' : '' }}>Completed</option>
+                                                        <option value="3" {{ old('event_status') == 3 ? 'selected' : '' }}>Cancelled</option>
+                                                    </select>
+                                                    @error('event_status')
+                                                        <span class="text-danger">
+                                                            {{ $message }}
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Add Event</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                  <li class="nav-item">
-                      <a class="nav-link" href="{{route('view.events')}}"><i class="fas fa-calendar-alt"></i> View Events </a>
-                  </li>
-                  <li class="nav-item">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('view.events')}}"><i class="fas fa-calendar-alt"></i> View Events </a>
+                    </li>
+                    <li class="nav-item">
                     <a class="nav-link" href="{{route('view.members')}}">
                         <i class="fa-solid fa-users"></i> View Members
                     </a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="{{route('logout')}}" 
-                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('logout')}}" 
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <i class="fas fa-sign-out-alt"></i> Logout </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
-                  </li>
-              </ul>
-          </div>
-      </div>
-  </nav>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>

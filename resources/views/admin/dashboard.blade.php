@@ -25,7 +25,7 @@
             </div>
             <div class="col-md-3 mt-4">
                 <div class="card card-outline card-primary shadow">
-                    <div class="card-header bg-success">
+                    <div class="card-header bg-success text-white">
                         <h5>Completed Events</h5> 
                     </div>
                     <div class="card-body">

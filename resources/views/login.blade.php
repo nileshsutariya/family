@@ -9,13 +9,23 @@
   <section class="container-fluid">
     <section class="row justify-content-center">
       <section class="col-12 col-sm-6 col-md-4">
-        <form class="form-container" action="{{route('login')}}" method="POST" style="background: #dfdbdb; border-radius: 10px; padding: 40px;">
+        <form class="form-container" action="{{route('login-in')}}" method="POST" style="background: #dfdbdb; border-radius: 10px; padding: 40px;">
           @csrf
           <div class="form-group">
             <h4 class="text-center font-weight-bold mb-3"> Login </h4>
-            
-            <input type="text" name="login" class="form-control mb-3" id="Inputuser1" aria-describeby="usernameHelp" placeholder="Email">
-            <input type="password" name="password" class="form-control mb-3" id="InputPassword1" placeholder="Password">
+
+            <input type="email" name="email" class="form-control" id="Inputuser1" aria-describeby="usernameHelp" placeholder="Email">
+            @error('email')
+                <span class="text-danger">
+                    {{ $message }}
+                </span>
+            @enderror
+            <input type="password" name="password" class="form-control mt-3" id="InputPassword1" placeholder="Password">
+            @error('password')
+                <span class="text-danger">
+                    {{ $message }}
+                </span>
+            @enderror
           </div>
           <button type="Sign in" class="btn btn-primary btn-block mt-2">Sign In</button>
           <div class="form-footer text-center mt-2">

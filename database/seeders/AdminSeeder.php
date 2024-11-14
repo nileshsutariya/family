@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -14,12 +15,17 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->create([
-            'name' => 'admin',
+        User::create([
+            'first_name' => 'admin',
+            'middle_name' => 'admin',
+            'last_name' => 'admin',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('123456'),
-            'phone_number ' => '1023456789',
-            'role_type' => 'admin'
+            'address' => 'Surat, Gujarat',
+            'phone_no' => '1234567890',
+            'date_of_birth' => Carbon::create('1992', '12', '25')->format('Y-m-d'),
+            'gender' => 'male',
+            'role_type' => '1'
         ]);
     }
 }

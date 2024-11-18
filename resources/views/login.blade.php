@@ -5,14 +5,14 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <title> Login </title>
 </head>
-<body style="background: #fff; padding-top: 50px;">
+<body style="background: #e1ecf1; padding-top: 50px;">
   <section class="container-fluid">
     <section class="row justify-content-center">
       <section class="col-12 col-sm-6 col-md-4">
-        <form class="form-container" action="{{route('login-in')}}" method="POST" style="background: #dfdbdb; border-radius: 10px; padding: 40px;">
+        <form class="form-container shadow" action="{{route('login-in')}}" method="POST" style="background: #ffffff; border-radius: 15px; padding: 40px;">
           @csrf
           <div class="form-group">
-            <h4 class="text-center font-weight-bold mb-3"> Login </h4>
+            <h2 class="text-center font-weight-bold mb-3"> Login </h2>
 
             <input type="email" name="email" class="form-control" id="Inputuser1" aria-describeby="usernameHelp" placeholder="Email">
             @error('email')

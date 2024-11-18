@@ -15,10 +15,14 @@ class EventController extends Controller
             'title' => 'required',
             'event_date' => 'required',
             'event_time' => 'required',
-            'event_address' => 'required|unique:users|email',
-            'organizer' => 'required|numeric',
-            'event_status' => 'required',
-        ])->validate();
+            'event_address' => 'required',
+            'organizer' => 'required',
+            'event_status' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->messages()], 422);
+        }
+
         $events= new Events();
         $events->title = $request['title'];
         $events->event_date = $request['event_date'];
@@ -30,7 +34,6 @@ class EventController extends Controller
             $imagename= $banner->getClientOriginalName();
             $imagepath='public/image';
             $banner->move($imagepath,$imagename);
-
             $events->banner=$imagename;
         } else {
             $imagename = null;
@@ -44,11 +47,11 @@ class EventController extends Controller
         $events->notes = $request['notes'];
         $events->save();
         $url=$request->url();
-        if (strpos($url, 'api') == true){
-                return response()->json("register successfull.");
-        }else{
+        if (strpos($url, 'api') == true) {
+            return response()->json("event stored successfully!"); 
+        } else {
             return redirect()->back()->with('store', 'Event Created Successfully!!');
-        }   
+        }    
     }
     public function delete($id)
     {
@@ -63,6 +66,18 @@ class EventController extends Controller
     }
     public function update(request $request, $id)
     {
+        $validator = Validator::make($request->all(), [
+            'title' => 'required',
+            'event_date' => 'required',
+            'event_time' => 'required',
+            'event_address' => 'required',
+            'organizer' => 'required',
+            'event_status' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->messages()], 422);
+        }
+
         $events = Events::find($id); 
         $users = User::all();
 
@@ -87,7 +102,6 @@ class EventController extends Controller
         }
         $events->event_status = $event_status;
         $events->save();
-
         return redirect()->route('view.events')->with('update', 'Event Updated Successfully!!');
     }
     public function eventstatus(Request $request)
@@ -95,7 +109,7 @@ class EventController extends Controller
         if ($request->id) {
             $query = Events::where('id',$request->id)->first();
             if($query){
-                if($query->event_status=="0"){
+                if($query->event_status=="0") {
                     $query->event_status="1";
                 } elseif($query->event_status=="1") {
                     $query->event_status="2";
@@ -110,5 +124,4 @@ class EventController extends Controller
             }
         }
     }
-   
 }

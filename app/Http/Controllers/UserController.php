@@ -76,8 +76,20 @@ class UserController extends Controller
         $users->gender = $request->gender;            
         $users->password = Hash::make($request->password); 
         $users->parent_id = $parentid;                
-        $users->save();                      
-        return redirect()->route('login')->with('message', 'Registration successful!');
+        $users->save();  
+        $url=$request->url();
+        if (strpos($url, 'api') == true) {
+            $token = $users->createToken('register-token')->accessToken;
+            $message="register successfully";
+            $response = [
+                'user' => $users,
+                'token' => $token,
+                'message'=>$message
+            ];
+            return response($response,201); 
+        } else {
+            return redirect()->route('login')->with('store', 'Registration successful!');
+        }                    
     }
     public function delete($id)
     {
@@ -87,7 +99,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $users = User::find($id);
-        return view("admin.users",compact( 'users'));
+        return view("admin.users",compact('users'));
     }
     public function update(Request $request)
     {

@@ -124,7 +124,7 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar content navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="#"><i class="fas fa-tree"></i> Family Tree Admin</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -150,48 +150,32 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="{{route('event.store')}}" method="POST" enctype="multipart/form-data">
+                                    <form action="{{route('event.store')}}" id="formdata" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <div class="row">
                                             <div class="mb-3">
                                                 <label for="title" class="form-label">Event Title</label>
                                                 <input type="text" class="form-control" id="title" name="title" value="{{old('title')}}">
-                                                @error('title')
-                                                <span class="text-danger">
-                                                    {{ $message }}
-                                                </span>
-                                                @enderror
+                                                <span class="text-danger error-title" id="title_error"></span>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label for="event_date" class="form-label">Event Date</label>
                                                     <input type="date" class="form-control" id="event_date" name="event_date" value="{{old('event_date')}}">
-                                                    @error('event_date')
-                                                        <span class="text-danger">
-                                                            {{ $message }}
-                                                        </span>
-                                                    @enderror
+                                                    <span class="text-danger error-event_date" id="event_date_error"></span>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label for="event_time" class="form-label">Event Time</label>
                                                     <input type="time" class="form-control" id="event_time" name="event_time" value="{{old('event_time')}}">
-                                                    @error('event_time')
-                                                        <span class="text-danger">
-                                                            {{ $message }}
-                                                        </span>
-                                                    @enderror
+                                                    <span class="text-danger error-event_time" id="event_time_error"></span>
                                                 </div>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="event_adddress" class="form-label">Address</label>
                                                 <textarea type="text" class="form-control" id="event_address" name="event_address">{{old('event_address')}}</textarea>
-                                                @error('event_address')
-                                                    <span class="text-danger">
-                                                        {{ $message }}
-                                                    </span>
-                                                @enderror
+                                                <span class="text-danger error-event_address" id="event_address_error"></span>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="organizer" class="form-label">Organizer</label>
@@ -201,11 +185,7 @@
                                                         <option value="{{ $user->id }}" {{ old('organizer') == 1 ? 'selected' : '' }}>{{ $user->first_name ?? 'No First Name' }}</option>
                                                     @endforeach
                                                 </select>
-                                                @error('organizer')
-                                                    <span class="text-danger">
-                                                        {{ $message }}
-                                                    </span>
-                                                @enderror
+                                                <span class="text-danger error-organizer" id="organizer_error"></span>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="notes" class="form-label">Notes</label>
@@ -221,17 +201,13 @@
                                                 <div class="form-group mb-3">
                                                     <label for="dropdown" class="form-label">Event Status : </label>
                                                     <select id="event_status" class="form-control" name="event_status">
-                                                        <option value="" disabled selected> -- Select an option -- </option>
-                                                        <option value="0" {{ old('event_status') == 0 ? 'selected' : '' }}>Upcoming</option>
-                                                        <option value="1" {{ old('event_status') == 1 ? 'selected' : '' }}>Ongoing</option>
-                                                        <option value="2" {{ old('event_status') == 2 ? 'selected' : '' }}>Completed</option>
-                                                        <option value="3" {{ old('event_status') == 3 ? 'selected' : '' }}>Cancelled</option>
+                                                        <option value="" disabled {{ old('event_status') === null ? 'selected' : '' }}> -- Select an option -- </option>
+                                                        <option value="0" {{ old('event_status') === 0 ? 'selected' : '' }}>Upcoming</option>
+                                                        <option value="1" {{ old('event_status') === 1 ? 'selected' : '' }}>Ongoing</option>
+                                                        <option value="2" {{ old('event_status') === 2 ? 'selected' : '' }}>Completed</option>
+                                                        <option value="3" {{ old('event_status') === 3 ? 'selected' : '' }}>Cancelled</option>
                                                     </select>
-                                                    @error('event_status')
-                                                        <span class="text-danger">
-                                                            {{ $message }}
-                                                        </span>
-                                                    @enderror
+                                                    <span class="text-danger error-event_status" id="event_status_error"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -249,9 +225,9 @@
                         <a class="nav-link" href="{{route('view.events')}}"><i class="fas fa-calendar-alt"></i> View Events </a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="{{route('view.members')}}">
-                        <i class="fa-solid fa-users"></i> View Members
-                    </a>
+                        <a class="nav-link" href="{{route('view.members')}}">
+                            <i class="fa-solid fa-users"></i> View Members
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('logout')}}" 
@@ -265,3 +241,78 @@
             </div>
         </div>
     </nav>
+
+{{-- <script>
+    $('#formdata').submit(function(event) {
+            event.preventDefault();
+
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    type: 'POST',
+                    url: '{{ route('event.store') }}',
+                    data: $('#formdata').serialize(),
+                    
+                    success: function(response) {
+                        console.log('{{ route('event.store') }}');
+                        console.log(response);
+                        if (response.success) {
+                            alert(response.success);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        if (xhr.status === 422) {
+                            var errors = xhr.responseJSON.error;
+                            $.each(errors, function(key, value) {
+                                var errorClass = '.error-' + key.replace(/\./g, '_');
+                                console.log(errorClass)
+                                $(errorClass).text(value[0]);
+                                
+                            });
+                        }
+                    }
+               
+                });
+            });
+</script> --}}
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        $('#formdata').on('submit', function (e) {
+            e.preventDefault(); 
+    
+            $('.text-danger').text('');
+    
+            let formData = new FormData(this);
+    
+            $.ajax({
+                url: "{{ route('event.store') }}",
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (response) {
+                    $('#addEventModal').modal('hide');
+                    location.reload(); 
+                },
+                error: function(xhr, status, error) {
+                    if (xhr.status === 422) {
+                        var errors = xhr.responseJSON.error;
+                        $.each(errors, function(key, value) {
+                            var errorClass = '.error-' + key.replace(/\./g, '_');
+                            console.log(errorClass)
+                            $(errorClass).text(value[0]);
+                            
+                        });
+                    }
+                }
+            });
+        });
+    });
+</script>
+        

@@ -13,16 +13,35 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('first_name');
-            $table->string('middle_name');
-            $table->string('last_name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('elder')->comment('0 is yes , 1 is no');
+            $table->string('elder_ph_no')->nullable();
+            $table->string('ph_no');
             $table->string('password');
-            $table->string('address');
-            $table->string('phone_no');
-            $table->date('date_of_birth')->nullable();
+            $table->string('first_name');
+            $table->string('father_name');
+            $table->string('mother_name');
+            $table->string('last_name');
+            $table->string('marital_status')->comment('0 is married, 1 is engaged, 2 is unmarried, 3 is widow/divorcee');
+            $table->string('spouse_name')->nullable();
+            $table->string('email')->unique()->nullable();
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('gender');
+            $table->date('date_of_birth')->nullable();
+            $table->string('age');
+            $table->string('blood_group');
+            $table->string('current_address');
+            $table->string('current_district');
+            $table->string('current_taluka');
+            $table->string('current_village')->nullable();
+            $table->string('village_address');
+            $table->string('village_district');
+            $table->string('village_taluka');
+            $table->string('village');
+            $table->string('education')->nullable();
+            $table->string('profession');
+            $table->string('company_name')->nullable();
+            $table->string('business_category')->nullable();
+            
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->foreign('parent_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('role_type')->default(0)->comment('0 is user , 1 is admin');

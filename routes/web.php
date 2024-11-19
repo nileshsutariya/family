@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
 // Route::get('/index', function () {
-//     return view('index');
+//     return view('admin.add-event');
 // });
 
 Route::get('/', [LoginController::class, 'index'])->name('login');
@@ -31,6 +31,8 @@ Route::middleware(['auth', 'users:0'])->group(function () {
 Route::middleware(['auth', 'users:1'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/viewevents', [AdminController::class, 'viewevent'])->name('view.events');
+    
+    Route::get('/add-event', [EventController::class, 'create'])->name('createevent');
     
     Route::get('/members', [UserController::class, 'view'])->name('view.members');
     

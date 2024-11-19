@@ -19,10 +19,27 @@ class AdminController extends Controller
         $events = Events::all();
         return view('admin.dashboard', compact('members','users', 'events','upcoming','ongoing','completed','cancelled'));
     }
-    public function viewevent()
+    public function viewevent(Request $request)
     {
+        if ($request->id) {
+            $query = Events::where('id',$request->id)->first();
+            if($query){
+                if($query->event_status=="0") {
+                    $query->event_status="1";
+                } elseif($query->event_status=="1") {
+                    $query->event_status="2";
+                } else {
+                    $query->event_status="3";
+                }
+                $query->save();
+
+                return response()->json([
+                    'event_status' => $query->event_status
+                ]); 
+            }
+        }
         $users = User::all();
-        $events= Events::leftJoin('users','users.id','=','events.organizer')->select('events.*','users.first_name as organizer')->get();
+        $events= Events::leftJoin('users','users.id','=','events.organizer')->select('events.*','users.first_name as organizer')->with('organizer')->get();
         return view('admin.viewevents', compact('users', 'events'));
     }
     

@@ -1,5 +1,4 @@
 @include('layouts.userheader')
-<body>
     <div class="container-fluid mt-4">
         <h3 class="text-center mb-4">All Events</h3>
         <div class="table-responsive">
@@ -31,13 +30,13 @@
                             <td>{{$event->notes}}</td>
                             <td class="event_status">
                                 @if($event->event_status == 0)
-                                    <button class="btn btn-sm btn-warning update-status" id="event_status" data-val="{{$event->id}}"> Upcoming </button>
+                                    <button class="btn btn-sm text-warning fw-bold update-status" id="event_status" data-val="{{$event->id}}"> Upcoming </button>
                                 @elseif($event->event_status == 1)
-                                    <button class="btn btn-sm btn-info update-status" id="event_status" data-val="{{$event->id}}"> Ongoing </button>
+                                    <button class="btn btn-sm text-info fw-bold update-status" id="event_status" data-val="{{$event->id}}"> Ongoing </button>
                                 @elseif($event->event_status == 2)
-                                    <button class="btn btn-sm btn-success update-status" id="event_status" data-val="{{$event->id}}"> Completed </button>
+                                    <button class="btn btn-sm text-success fw-bold update-status" id="event_status" data-val="{{$event->id}}"> Completed </button>
                                 @else
-                                    <button class="btn btn-sm btn-danger update-status" id="event_status" data-val="{{$event->id}}"> Cancelled </button>
+                                    <button class="btn btn-sm text-danger fw-bold update-status" id="event_status" data-val="{{$event->id}}"> Cancelled </button>
                                 @endif
                             </td>
                         </tr>

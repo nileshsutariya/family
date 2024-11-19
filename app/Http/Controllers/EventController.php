@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Validator;
 
 class EventController extends Controller
 {
+    public function create()
+    {
+        $users = User::all();
+        // $event = Events::all();
+        return view('admin.add-event',['mode' => 'add'], compact('users'));
+    }
     public function eventstore(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -18,10 +24,10 @@ class EventController extends Controller
             'event_address' => 'required',
             'organizer' => 'required',
             'event_status' => 'required'
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->messages()], 422);
-        }
+        ])->validate();
+        // if ($validator->fails()) {
+        //     return response()->json(['error' => $validator->messages()], 422);
+        // }
 
         $events= new Events();
         $events->title = $request['title'];
@@ -38,19 +44,14 @@ class EventController extends Controller
         } else {
             $imagename = null;
         }
-        if ($request['event_status'] == 'on') {
-            $event_status = 1;
-        } else {
-            $event_status = 0;
-        }
-        $events->event_status = $event_status;
+        $events->event_status = $request['event_status'];
         $events->notes = $request['notes'];
         $events->save();
         $url=$request->url();
         if (strpos($url, 'api') == true) {
             return response()->json("event stored successfully!"); 
         } else {
-            return redirect()->back()->with('store', 'Event Created Successfully!!');
+            return redirect()->route('view.events')->with('store', 'Event Stored Successfully!!');
         }    
     }
     public function delete($id)
@@ -61,8 +62,9 @@ class EventController extends Controller
     public function edit($id)
     {
         $users = User::all();
+        // $event = Events::all();
         $events = Events::find($id);
-        return view("admin.viewevents",compact('events', 'users'));
+        return view("admin.add-event",['mode' => 'edit'],compact('events', 'users'));
     }
     public function update(request $request, $id)
     {
@@ -91,16 +93,11 @@ class EventController extends Controller
             $imagename= $banner->getClientOriginalName();
             $imagepath='public/image/';
             $banner->move($imagepath,$imagename);
-            $banner->banner=$imagename;
+            $events->banner=$imagename;
         } else {
             $imagename = null;
         }
-        if ($request['event_status'] == 'on') {
-            $event_status = 1;
-        } else {
-            $event_status = 0;
-        }
-        $events->event_status = $event_status;
+        $events->event_status = $request['event_status'];
         $events->save();
         return redirect()->route('view.events')->with('update', 'Event Updated Successfully!!');
     }

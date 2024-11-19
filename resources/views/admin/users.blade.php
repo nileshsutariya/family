@@ -1,5 +1,4 @@
 @include('layouts.header')
-<body>
     <div class="container-fluid mt-4">
         <h3 class="text-center mb-4">All Members</h3>
         <div class="table-responsive">
@@ -133,8 +132,4 @@
         });
     </script>
     
-
-    </div>
-    </div>
-</body>
-</html>
+@include('layouts.footer')

@@ -143,10 +143,6 @@ class UserController extends Controller
     public function profileupdate(Request $request)
     {
         $users = Auth::user();
-        // $validatedData = $request->validate([
-        //     'current_password' => 'required|string',
-        //     'new_password' => 'required|string|confirmed',
-        // ]);
         $users->first_name = $request['first_name'];
         $users->middle_name = $request['middle_name'];
         $users->last_name = $request['last_name'];
@@ -155,7 +151,6 @@ class UserController extends Controller
         $users->address = $request['address'];
         $users->date_of_birth = $request['date_of_birth'];
         $users->gender = $request['gender'];
-        // $users->password = Hash::make($validatedData['new_password']);
         $users->save();
         return redirect()->route('profile')->with('update', 'User Updated Successfully!!');
     }

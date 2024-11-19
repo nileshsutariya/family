@@ -6,313 +6,201 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  <title>Family Tree</title>
+  <title>Family</title>
 
-  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js" integrity="sha512-zlWWyZq71UMApAjih4WkaRpikgY9Bz1oXIW5G0fED4vk14JjGlQ1UmkGM392jEULP8jbNMiwLWdM8Z87Hu88Fw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js" integrity="sha512-zlWWyZq71UMApAjih4WkaRpikgY9Bz1oXIW5G0fED4vk14JjGlQ1UmkGM392jEULP8jbNMiwLWdM8Z87Hu88Fw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.css" integrity="sha512-8D+M+7Y6jVsEa7RD6Kv/Z7EImSpNpQllgaEIQAtqHcI0H6F4iZknRj0Nx1DCdB+TwBaS+702BGWYC0Ze2hpExQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.js" integrity="sha512-Y+cHVeYzi7pamIOGBwYHrynWWTKImI9G78i53+azDb1uPmU1Dz9/r2BLxGXWgOC7FhwAGsy3/9YpNYaoBy7Kzg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.js" integrity="sha512-Y+cHVeYzi7pamIOGBwYHrynWWTKImI9G78i53+azDb1uPmU1Dz9/r2BLxGXWgOC7FhwAGsy3/9YpNYaoBy7Kzg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" integrity="sha512-wJgJNTBBkLit7ymC6vvzM1EcSWeM9mmOu+1USHaRBbHkm6W9EgM0HY27+UtUaprntaYQJF75rc8gjxllKs5OIQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+   <script src="https://code.jquery.com/jquery-3.7.1.js"></script> 
+   <!-- <script src="http://localhost/orderplacing/public/dist/js/pages/dashboard.js:14:27"></script>  -->
+
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script> -->
+  <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.27/dist/sweetalert2.all.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.27/dist/sweetalert2.min.css" rel="stylesheet">
+
+  <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+  <!-- JQVMap -->
+  <link rel="stylesheet" href="{{ asset('plugins/jqvmap/jqvmap.min.css') }}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{{ asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="{{ asset('plugins/daterangepicker/daterangepicker.css') }}">
+  <!-- summernote -->
+  <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}">
 
-  <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f8f9fa;
-        }
-        .navbar-brand {
-            font-weight: 600;
-        }
-        .card-header {
-            font-weight: 500;
-            font-size: 1.2rem;
-        }
-        .btn-success {
-            background-color: #28a745;
-            border: none;
-        }
-        .list-group-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .list-group-item h6 {
-            font-weight: 500;
-        }
-        .footer-text {
-            font-size: 0.9rem;
-        }
-        .container {
-            max-width: 1000px;
-        }
-
-        .custom-table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            background-color: #ffffff;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .custom-table thead {
-            background-color: powderblue;
-            color: #ffffff;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            font-weight: bold;
-        }
-
-        .custom-table thead th {
-            padding: 15px;
-        }
-
-        .custom-table tbody tr {
-            transition: background-color 0.3s ease;
-        }
-
-        .custom-table tbody tr:nth-child(even) {
-            background-color: #f8f9fa;
-        }
-
-        .custom-table tbody tr:hover {
-            background-color: #e9ecef;
-        }
-
-        .custom-table td {
-            padding: 15px;
-            border-top: 1px solid #dee2e6;
-        }
-
-        .custom-table td:first-child,
-        .custom-table th:first-child {
-            border-left: none;
-        }
-
-        .custom-table td:last-child,
-        .custom-table th:last-child {
-            border-right: none;
-        }
-
-        .btn-outline-primary, .btn-outline-danger {
-            border-radius: 20px;
-            padding: 6px 12px;
-        }
-
-        .btn-outline-primary:hover {
-            color: #ffffff;
-            background-color: #5f9ee0;
-            border-color: #0056b3;
-        }
-
-        .btn-outline-danger:hover {
-            color: #ffffff;
-            background-color: #c82333;
-            border-color: #c82333;
-        }
-  </style>
 </head>
-<body>
+<body class="hold-transition sidebar-mini layout-fixed">
+  <div class="wrapper">
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item ">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="" class="nav-link">Home</a>
+        </li> 
+      </ul>
 
-    <nav class="navbar content navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#"><i class="fas fa-tree"></i> Family Tree Admin</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('admin.dashboard')}}"><i class="fas fa-tachometer-alt"></i> Dashboard </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#addEventModal">
-                            <i class="fas fa-plus-circle"></i> Add Event
-                        </a>
-                    </li>
-                    <div class="modal fade" id="addEventModal" tabindex="-1" aria-labelledby="addEventModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content" style="background-image: linear-gradient(to right, lavender, white);">
-                                <div class="modal-header">
-                                    <div class="card-header">
-                                        <i class="fas fa-calendar-plus"></i> Add New Event
-                                    </div>                                    
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form action="{{route('event.store')}}" id="formdata" method="POST" enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="row">
-                                            <div class="mb-3">
-                                                <label for="title" class="form-label">Event Title</label>
-                                                <input type="text" class="form-control" id="title" name="title" value="{{old('title')}}">
-                                                <span class="text-danger error-title" id="title_error"></span>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="mb-3">
-                                                    <label for="event_date" class="form-label">Event Date</label>
-                                                    <input type="date" class="form-control" id="event_date" name="event_date" value="{{old('event_date')}}">
-                                                    <span class="text-danger error-event_date" id="event_date_error"></span>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="mb-3">
-                                                    <label for="event_time" class="form-label">Event Time</label>
-                                                    <input type="time" class="form-control" id="event_time" name="event_time" value="{{old('event_time')}}">
-                                                    <span class="text-danger error-event_time" id="event_time_error"></span>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="event_adddress" class="form-label">Address</label>
-                                                <textarea type="text" class="form-control" id="event_address" name="event_address">{{old('event_address')}}</textarea>
-                                                <span class="text-danger error-event_address" id="event_address_error"></span>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="organizer" class="form-label">Organizer</label>
-                                                <select name="organizer" id="organizer" class="form-control mt-1">
-                                                    <option value="">-- Select Organizer --</option>
-                                                    @foreach ($users as $user)
-                                                        <option value="{{ $user->id }}" {{ old('organizer') == 1 ? 'selected' : '' }}>{{ $user->first_name ?? 'No First Name' }}</option>
-                                                    @endforeach
-                                                </select>
-                                                <span class="text-danger error-organizer" id="organizer_error"></span>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="notes" class="form-label">Notes</label>
-                                                <textarea type="text" class="form-control" id="notes" name="notes">{{old('notes')}}</textarea>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="mb-3">
-                                                    <label for="banner" class="form-label">Banner</label>
-                                                    <input type="file" class="form-control" id="banner" name="banner" value="{{old('banner')}}">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group mb-3">
-                                                    <label for="dropdown" class="form-label">Event Status : </label>
-                                                    <select id="event_status" class="form-control" name="event_status">
-                                                        <option value="" disabled {{ old('event_status') === null ? 'selected' : '' }}> -- Select an option -- </option>
-                                                        <option value="0" {{ old('event_status') === 0 ? 'selected' : '' }}>Upcoming</option>
-                                                        <option value="1" {{ old('event_status') === 1 ? 'selected' : '' }}>Ongoing</option>
-                                                        <option value="2" {{ old('event_status') === 2 ? 'selected' : '' }}>Completed</option>
-                                                        <option value="3" {{ old('event_status') === 3 ? 'selected' : '' }}>Cancelled</option>
-                                                    </select>
-                                                    <span class="text-danger error-event_status" id="event_status_error"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Add Event</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item d-none d-sm-inline-block float-right">
+          <a href="#" class="btn btn-primary"
+            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+          </form>
+        </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('view.events')}}"><i class="fas fa-calendar-alt"></i> View Events </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('view.members')}}">
-                            <i class="fa-solid fa-users"></i> View Members
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('logout')}}" 
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <i class="fas fa-sign-out-alt"></i> Logout </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                    </li>
-                </ul>
-            </div>
-        </div>
+      </ul>
     </nav>
+    <!-- /.navbar -->
 
-{{-- <script>
-    $('#formdata').submit(function(event) {
-            event.preventDefault();
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <a href="index3.html" class="brand-link text-center ">
+        <span class="brand-text font-weight-light "><h4>Family</h4></span>
+      </a>
 
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    type: 'POST',
-                    url: '{{ route('event.store') }}',
-                    data: $('#formdata').serialize(),
-                    
-                    success: function(response) {
-                        console.log('{{ route('event.store') }}');
-                        console.log(response);
-                        if (response.success) {
-                            alert(response.success);
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        if (xhr.status === 422) {
-                            var errors = xhr.responseJSON.error;
-                            $.each(errors, function(key, value) {
-                                var errorClass = '.error-' + key.replace(/\./g, '_');
-                                console.log(errorClass)
-                                $(errorClass).text(value[0]);
-                                
-                            });
-                        }
-                    }
-               
-                });
-            });
-</script> --}}
+      <!-- Sidebar -->
+      <div class="sidebar">
 
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" id="ul">
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        $('#formdata').on('submit', function (e) {
-            e.preventDefault(); 
+            <li class="nav-item">
+              <a href="{{route('admin.dashboard')}}" class="nav-link ">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>Dashboard </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{route('view.events')}}" class="nav-link ">
+                <i class="nav-icon fa-solid fa-calendar-days"></i>
+                <p>Events</p>
+              </a>
+            </li>
+            <li class="nav-item li">
+              <a href="" class="nav-link">
+                <i class="nav-icon fa-solid fa-people-roof"></i>
+                <p>Family Information Per <p class="ml-5">Village</p></p>
+              </a>
+            </li>
+            <li class="nav-item li">
+              <a href="" class="nav-link ">
+                <i class="nav-icon fa-solid fa-users"></i>
+                <p>Family Members Info.</p>
+              </a>
+            </li>
+            <li class="nav-item li">
+              <a href="" class="nav-link ">
+                <i class="nav-icon fa-solid fa-circle-user"></i>
+                <p>My Profile</p>
+              </a>
+            </li>
+          </ul>
+          <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>
     
-            $('.text-danger').text('');
-    
-            let formData = new FormData(this);
-    
-            $.ajax({
-                url: "{{ route('event.store') }}",
-                type: "POST",
-                data: formData,
-                processData: false,
-                contentType: false,
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function (response) {
-                    $('#addEventModal').modal('hide');
-                    location.reload(); 
-                },
-                error: function(xhr, status, error) {
-                    if (xhr.status === 422) {
-                        var errors = xhr.responseJSON.error;
-                        $.each(errors, function(key, value) {
-                            var errorClass = '.error-' + key.replace(/\./g, '_');
-                            console.log(errorClass)
-                            $(errorClass).text(value[0]);
-                            
-                        });
-                    }
-                }
-            });
-        });
-    });
-</script>
-        
+    <script>           
+   $(function(){
+   var current = location.pathname;
+   
+   $('#ul li a').each(function(){
+     var a = $(this);
+     if(a.attr('href').indexOf(current) !== -1){
+            a.addClass('active');
+        }
+    })
+    })
+    </script>
+                   
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+
+      
+      @if (session('store'))
+      <script>
+          const Toast = Swal.mixin({
+              toast: true,
+              position: "top-right",
+              iconColor: 'green',
+              customClass: {
+                  popup: 'colored-toast'
+              },
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true 
+          });
+          Toast.fire("Message", "{{ Session::get('store') }}", 'success', {
+              icon: 'success',
+          });
+
+      </script>
+      @endif
+
+      @if (session('update'))
+      <script>
+          const Toast = Swal.mixin({
+              toast: true,
+              position: "top-right",
+              iconColor: 'green',
+              customClass: {
+                  popup: 'colored-toast'
+              },
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true 
+          });
+          Toast.fire("Message", "{{ Session::get('update') }}", 'success', {
+              icon: 'success',
+          });
+
+      </script>
+      @endif
+
+      @if (session('delete'))
+      <script>
+          const Toast = Swal.mixin({
+              toast: true,
+              position: "top-right",
+              iconColor: 'green',
+              customClass: {
+                  popup: 'colored-toast'
+              },
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true 
+          });
+          Toast.fire("Message", "{{ Session::get('delete') }}", 'success', {
+              icon: 'success',
+          });
+
+      </script>
+      @endif

@@ -12,14 +12,14 @@ use App\Http\Controllers\API\APIController;
 //     return $request->user();
 // })->middleware('auth:api');
 
-Route::post('/store',[UserController::class, 'store'])->name('store');
+Route::post('/store',[UserController::class, 'store'])->name('storedata');
 
 Route::post('/login', [APIController::class, 'login'])->name('loggedin');
 
-Route::post('/weeklyevents', [APIController::class, 'weeklyevents'])->name('view.user.event');
-Route::post('/events', [APIController::class, 'viewevents'])->name('view.events');
+Route::post('/weeklyevents', [APIController::class, 'weeklyevents'])->name('view.users.event');
+Route::post('/events', [APIController::class, 'viewevents'])->name('view.event');
 
 Route::middleware('auth:api')->group(function () {
-    Route::post('/logout', [APIController::class, 'logout'])->name('logout');
+    Route::post('/logout', [APIController::class, 'logout'])->name('loggedout');
     Route::get('/user', [APIController::class, 'display']);
 });

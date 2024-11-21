@@ -20,7 +20,7 @@
                     </div>
                     <div class="col-md-4"> 
                       <label for="middlename">Middle Name</label>
-                      <input type="text" name="middle_name" class="form-control mb-3" id="Inputuser2" aria-describeby="usernameHelp" placeholder="Middle Name" value="{{$users->middle_name}}">
+                      {{-- <input type="text" name="middle_name" class="form-control mb-3" id="Inputuser2" aria-describeby="usernameHelp" placeholder="Middle Name" value="{{$users->middle_name}}"> --}}
                     </div>
                     <div class="col-md-4">
                       <label for="lastname">Last Name</label>
@@ -32,11 +32,11 @@
                     </div>
                     <div class="col-md-6">
                       <label for="phno">Phone No.</label>
-                      <input type="text" name="phone_no" class="form-control mb-3" id="Inputuser1" aria-describeby="usernameHelp" placeholder="Phone Number" value="{{$users->phone_no}}">
+                      <input type="text" name="ph_no" class="form-control mb-3" id="Inputuser1" aria-describeby="usernameHelp" placeholder="Phone Number" value="{{$users->phone_no}}">
                     </div>
                     <div class="col-md-12">
                       <label for="address">Address</label>
-                      <textarea type="text" class="form-control mb-3" id="address" name="address" placeholder="Address">{{$users->address}}</textarea>
+                      {{-- <textarea type="text" class="form-control mb-3" id="address" name="address" placeholder="Address">{{$users->address}}</textarea> --}}
                     </div>
                     <div class="col-md-6">
                       <label for="dob">Date of Birth</label>

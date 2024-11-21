@@ -14,8 +14,8 @@
           <div class="form-group">
             <h2 class="text-center font-weight-bold mb-3"> Login </h2>
 
-            <input type="email" name="email" class="form-control" id="Inputuser1" aria-describeby="usernameHelp" placeholder="Email">
-            @error('email')
+            <input type="text" name="ph_no" class="form-control" id="Inputuser1" aria-describeby="usernameHelp" placeholder="Mobile No">
+            @error('ph_no')
                 <span class="text-danger">
                     {{ $message }}
                 </span>

@@ -43,53 +43,93 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'first_name' => 'required',
-            'middle_name' => 'required',
-            'last_name' => 'required',
-            'email' => 'required|unique:users|email',
-            'phone_no' => 'required|numeric',
-            'address' => 'required',
-            'date_of_birth' => 'required',
-            'gender' => 'required',
+            'elder' => 'required|in:yes,no',
+            'elder_ph_no' => 'nullable|string',
+            'ph_no' => 'required|string',
             'password' => 'required',
-            'confirmpassword' => 'required|same:password',
+            'first_name' => 'required',
+            'father_name' => 'required',
+            'mother_name' => 'required',
+            'last_name' => 'required',
+            'marital_status' => 'required',
+            'spouse_name' => 'nullable',
+            'email' => 'nullable',
+            'gender' => 'required',
+            'date_of_birth' => 'nullable',
+            'blood_group' => 'required',
+            'c_address' => 'required',
+            'c_district' => 'required',
+            'c_taluka' => 'required',
+            'c_village' => 'required',
+            'v_address' => 'required',
+            'v_district' => 'required',
+            'v_taluka' => 'required',
+            'v_village' => 'required',
+            'education' => 'nullable',
+            'profession' => 'required',
+            'company_name' => 'nullable',
+            'business_category' => 'nullable',
+            'parent_id' => 'nullable'
         ])->validate();
+
         $parentid = null;
 
-        $rootUser = User::where('first_name', $request->middle_name)
+        $rootUser = User::where('ph_no', $request->ph_no)
                     ->orWhere(function($query) use ($request) {
-                        $query->where('first_name', $request->first_name)
-                            ->where('middle_name', $request->middle_name)
+                        $query->where('ph_no', $request->ph_no)
+                            ->where('elder_ph_no', $request->ph_no)
                             ->whereNull('parent_id');
                     })->first();
 
         $parentid = $rootUser ? $rootUser->id : null;
 
         $users = new User;
-        $users->first_name = $request->first_name;  
-        $users->middle_name = $request->middle_name;
-        $users->last_name = $request->last_name;     
-        $users->email = $request->email;           
-        $users->phone_no = $request->phone_no;        
-        $users->address = $request->address;          
-        $users->date_of_birth = $request->date_of_birth;        
-        $users->gender = $request->gender;            
+        $users->elder = $request->elder;
+        // $elder_ph_no = $request->input('elder_ph_no');        
+        $users->elder_ph_no = $request->elder_ph_no;        
+        // $ph_no = $request->input('ph_no');
+        $users->ph_no = $request->ph_no;
         $users->password = Hash::make($request->password); 
-        $users->parent_id = $parentid;                
-        $users->save();  
-        $url=$request->url();
-        if (strpos($url, 'api') == true) {
-            $token = $users->createToken('register-token')->accessToken;
-            $message="register successfully";
-            $response = [
-                'user' => $users,
-                'token' => $token,
-                'message'=>$message
-            ];
-            return response($response,201); 
-        } else {
-            return redirect()->route('login')->with('store', 'Registration successful!');
-        }                    
+        $users->first_name = $request->first_name;
+        $users->father_name = $request->father_name;
+        $users->mother_name = $request->mother_name;
+        $users->last_name = $request->last_name;
+        $users->marital_status = $request->marital_status;
+        $users->spouse_name = $request->spouse_name;
+        $users->email = $request->email;
+        $users->gender = $request->gender;
+        $users->date_of_birth = $request->date_of_birth;
+        $users->blood_group = $request->blood_group;
+        $users->c_address = $request->c_address;
+        $users->c_district = $request->c_district;
+        $users->c_taluka = $request->c_taluka;
+        $users->c_village = $request->c_village;
+        $users->v_address = $request->v_address;
+        $users->v_district = $request->v_district;
+        $users->v_taluka = $request->v_taluka;
+        $users->v_village = $request->v_village;
+        $users->education = $request->education;
+        $users->profession = $request->profession;
+        $users->company_name = $request->company_name;
+        $users->business_category = $request->business_category;
+        $users->parent_id = $parentid;
+        // dd($users); die;
+        $users->save();
+        return redirect()->route('login')->with('store', 'Registration successful!');
+
+        // $url=$request->url();
+        // if (strpos($url, 'api') == true) {
+        //     $token = $users->createToken('register-token')->accessToken;
+        //     $message="register successfully";
+        //     $response = [
+        //         'user' => $users,
+        //         'token' => $token,
+        //         'message'=>$message
+        //     ];
+        //     return response($response,201); 
+        // } else {
+        //     return redirect()->route('login')->with('store', 'Registration successful!');
+        // }                    
     }
     public function delete($id)
     {

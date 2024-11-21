@@ -43,4 +43,12 @@ class AdminController extends Controller
         return view('admin.viewevents', compact('users', 'events'));
     }
     
+    public function familyinfo()
+    {
+        return view('admin.familymember');
+    }
+    public function profile()
+    {
+        return view('admin.profile');
+    }
 }

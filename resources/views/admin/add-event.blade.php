@@ -104,9 +104,7 @@
                               </span>
                           @enderror  
                       </div>
-                    </div>
-                  
-                   
+                    </div> 
                 </div>
               </div>
               <button type="submit" class="btn btn-primary btn-block mt-2">Submit</button>

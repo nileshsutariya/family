@@ -9,14 +9,10 @@
   <title>Family</title>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js" integrity="sha512-zlWWyZq71UMApAjih4WkaRpikgY9Bz1oXIW5G0fED4vk14JjGlQ1UmkGM392jEULP8jbNMiwLWdM8Z87Hu88Fw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.css" integrity="sha512-8D+M+7Y6jVsEa7RD6Kv/Z7EImSpNpQllgaEIQAtqHcI0H6F4iZknRj0Nx1DCdB+TwBaS+702BGWYC0Ze2hpExQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.js" integrity="sha512-Y+cHVeYzi7pamIOGBwYHrynWWTKImI9G78i53+azDb1uPmU1Dz9/r2BLxGXWgOC7FhwAGsy3/9YpNYaoBy7Kzg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" integrity="sha512-wJgJNTBBkLit7ymC6vvzM1EcSWeM9mmOu+1USHaRBbHkm6W9EgM0HY27+UtUaprntaYQJF75rc8gjxllKs5OIQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   
    <script src="https://code.jquery.com/jquery-3.7.1.js"></script> 
-   <!-- <script src="http://localhost/orderplacing/public/dist/js/pages/dashboard.js:14:27"></script>  -->
-
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -81,7 +77,7 @@
 
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
-      <a href="index3.html" class="brand-link text-center ">
+      <a href="" class="brand-link text-center ">
         <span class="brand-text font-weight-light "><h4>Family</h4></span>
       </a>
 
@@ -93,31 +89,31 @@
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" id="ul">
 
             <li class="nav-item">
-              <a href="{{route('admin.dashboard')}}" class="nav-link ">
+              <a href="{{route('admin.dashboard')}}" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>Dashboard </p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{route('view.events')}}" class="nav-link ">
+              <a href="{{route('view.events')}}" class="nav-link">
                 <i class="nav-icon fa-solid fa-calendar-days"></i>
                 <p>Events</p>
               </a>
             </li>
-            <li class="nav-item li">
-              <a href="" class="nav-link">
+            <li class="nav-item">
+              <a href="{{route('family.village')}}" class="nav-link">
                 <i class="nav-icon fa-solid fa-people-roof"></i>
                 <p>Family Information Per <p class="ml-5">Village</p></p>
               </a>
             </li>
-            <li class="nav-item li">
-              <a href="" class="nav-link ">
+            {{-- <li class="nav-item">
+              <a href="{{route('family.info')}}" class="nav-link ">
                 <i class="nav-icon fa-solid fa-users"></i>
                 <p>Family Members Info.</p>
               </a>
-            </li>
-            <li class="nav-item li">
-              <a href="" class="nav-link ">
+            </li> --}}
+            <li class="nav-item">
+              <a href="{{route('admin.profile')}}" class="nav-link ">
                 <i class="nav-icon fa-solid fa-circle-user"></i>
                 <p>My Profile</p>
               </a>
@@ -129,16 +125,16 @@
     </aside>
     
     <script>           
-   $(function(){
-   var current = location.pathname;
-   
-   $('#ul li a').each(function(){
-     var a = $(this);
-     if(a.attr('href').indexOf(current) !== -1){
-            a.addClass('active');
-        }
-    })
-    })
+      $(function(){
+        var current = location.pathname;
+        
+        $('#ul li a').each(function(){
+          var a = $(this);
+          if(a.attr('href').indexOf(current) !== -1){
+              a.addClass('active');
+          }
+        });
+      });
     </script>
                    
     <!-- Content Wrapper. Contains page content -->

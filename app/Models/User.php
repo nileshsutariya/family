@@ -22,16 +22,44 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'first_name',
-        'middle_name',
-        'last_name',
-        'email',
+        'elder',
+        // 'elder_ph_no',
+        'ph_no',
         'password',
-        'address',
-        'phone_no',
+        'first_name',
+        'father_name',
+        'mother_name',
+        'last_name',
+        'marital_status',
+        // 'spouse_name',
+        'email',
         'gender',
-        'role_type'
+        // 'date_of_birth',
+        'blood_group',
+        'c_address',
+        'c_district',
+        'c_taluka',
+        'c_village',
+        'v_address',
+        'v_district',
+        'v_taluka',
+        'v_village',
+        'education',
+        'profession',
+        // 'company_name',
+        'business_category',
+        'parent_id',
     ];
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'parent_id');
+    }
+
+    // Define the children relationship if needed
+    public function parent()
+    {
+        return $this->hasMany(User::class, 'parent_id');
+    }
     public function events()
     {
         return $this->hasMany(Events::class, 'organizer');

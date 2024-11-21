@@ -14,11 +14,11 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required|email',
+            'ph_no' => 'required',
             'password' => 'required|string',
         ]);
-        $credentials = $request->only('email', 'password');
-        $email = $request->email;
+        $credentials = $request->only('ph_no', 'password');
+        $ph_no = $request->ph_no;
         if (Auth::attempt($credentials)) {
             $users = Auth::user();
             if ($users->role_type == '1') {

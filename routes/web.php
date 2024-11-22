@@ -48,7 +48,7 @@ Route::middleware(['auth', 'users:1'])->group(function () {
 
         Route::get('/view/family/byvillage', [FamilyPerVillageController::class, 'familybyvillage'])->name('family.village');
 
-        Route::get('/family-members/{ph_no}', [FamilyInformationController::class, 'familyinfo'])->name('family.members');
+        Route::get('/family-members/{v_village}', [FamilyInformationController::class, 'familyinfo'])->name('family.members');
 
         Route::get('/family', [AdminController::class, 'familyinfo'])->name('family.info');
 

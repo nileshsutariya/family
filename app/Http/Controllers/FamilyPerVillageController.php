@@ -10,14 +10,15 @@ class FamilyPerVillageController extends Controller
 {
     public function familybyvillage(Request $request)
     {
-        $elders = User::where('elder', 'yes')->get();
-    
-        return view('admin.familypervillage', compact('elders'));
-    }
-    public function getLinkedRecords(Request $request)
-    {
-        $linkedRecords = User::where('elder_ph_no', $request->elder_ph_no)->get();
+        $villages = User::select('v_village', 'v_district', 'v_taluka', DB::raw('count(*) as total'))
+            ->groupBy('v_village', 'v_district', 'v_taluka') 
+            ->get();
+        
+        foreach ($villages as $village) {
+            $village->user_count = User::where('v_village', $village->v_village)->count();
+        }
 
-        return response()->json($linkedRecords);
+        return view('admin.familypervillage', compact('villages'));
     }
+   
 }

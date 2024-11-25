@@ -7,14 +7,16 @@ use Illuminate\Http\Request;
 
 class TalukaController extends Controller
 {
-    public function getSuggestions(Request $request)
+    public function getSuggestions()
     {
-        $query = $request->get('query'); 
+        // $taluka = Taluka::all();
+        // return view('register', compact('taluka'));  
+        // $query = $request->get('query'); 
 
-        $suggestions = Taluka::where('taluka', 'like', "{$query}%") 
-                                ->limit(10) 
-                                ->pluck('taluka');
+        // $suggestions = Taluka::where('taluka', 'like', "{$query}%") 
+        //                         ->limit(10) 
+        //                         ->pluck('taluka');
 
-        return response()->json($suggestions);
+        // return response()->json($suggestions);
     }
 }

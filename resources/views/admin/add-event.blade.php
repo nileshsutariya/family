@@ -1,6 +1,7 @@
 @include('layouts.header')
-<a href="{{route('view.events')}}" class="btn btn-primary ml-4 mt-2"> BACK </a>
-
+<a href="{{route('view.events')}}" class="btn btn-primary ml-4 mt-2"> 
+  <i class="bi bi-arrow-left me-1"></i> Back
+</a>
 <section class="content mt-3">
   <div class="container">
     <div class="row">

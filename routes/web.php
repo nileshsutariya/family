@@ -29,12 +29,16 @@ Route::get('/village-suggestions', [VillageController::class, 'getSuggestions'])
 
 Route::middleware(['auth', 'users:0'])->group(function () {
     Route::group(['prefix'=>'user'], function () {
-        Route::get('/user', [UserController::class, 'index'])->name('user.dashboard');
-        Route::get('user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
-        Route::post('user/update/', [UserController::class, 'update'])->name('user.update');
-        Route::get('user/delete/{id}', [UserController::class, 'delete'])->name('user.delete');
-        Route::get('user/viewevent', [UserController::class, 'viewevent'])->name('view.user.event');
+        Route::get('/dashboard', [UserController::class, 'index'])->name('user.dashboard');
+        Route::get('/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+        Route::post('/update', [UserController::class, 'update'])->name('user.update');
+        Route::get('/delete/{id}', [UserController::class, 'delete'])->name('user.delete');
+        Route::get('/viewevent', [UserController::class, 'viewevent'])->name('view.user.event');
     
+        Route::get('family/members', [UserController::class, 'userview'])->name('family.user');
+
+        // Route::get('/female', [UserController::class, 'checkAndDeleteUnmatchedSpouse'])->name('female.married');
+
         Route::get('/profile', [UserController::class, 'profile'])->name('profile');
         Route::post('/profile/update', [UserController::class, 'profileupdate'])->name('profile.update');
     });
@@ -43,16 +47,17 @@ Route::middleware(['auth', 'users:0'])->group(function () {
 Route::middleware(['auth', 'users:1'])->group(function () {
     Route::group(['prefix'=>'admin'], function () {
 
-        Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
+        Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
         Route::get('/viewevents', [AdminController::class, 'viewevent'])->name('view.events');
 
         Route::get('/view/family/byvillage', [FamilyPerVillageController::class, 'familybyvillage'])->name('family.village');
 
-        Route::get('/family-members/{v_village}', [FamilyInformationController::class, 'familyinfo'])->name('family.members');
+        Route::get('/family-members/{village}', [FamilyInformationController::class, 'familyinfo'])->name('family.members');
 
         Route::get('/family', [AdminController::class, 'familyinfo'])->name('family.info');
 
         Route::get('/adminprofile', [AdminController::class, 'profile'])->name('admin.profile');
+        Route::post('/profile/update', [AdminController::class, 'updateprofile'])->name('admin.profile.update');
 
         Route::get('/add-event', [EventController::class, 'create'])->name('createevent');
 

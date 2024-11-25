@@ -23,7 +23,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'elder',
-        // 'elder_ph_no',
+        'elder_ph_no',
         'ph_no',
         'password',
         'first_name',
@@ -31,10 +31,10 @@ class User extends Authenticatable
         'mother_name',
         'last_name',
         'marital_status',
-        // 'spouse_name',
+        'spouse_name',
         'email',
         'gender',
-        // 'date_of_birth',
+        'date_of_birth',
         'blood_group',
         'c_address',
         'c_district',
@@ -46,7 +46,7 @@ class User extends Authenticatable
         'v_village',
         'education',
         'profession',
-        // 'company_name',
+        'company_name',
         'business_category',
         'parent_id',
     ];

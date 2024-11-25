@@ -7,10 +7,12 @@ use App\Models\User;
 
 class FamilyInformationController extends Controller
 {
-    public function familyinfo($v_village)
+    public function familyinfo($village)
     {
-        $familyMembers = User::where('v_village', $v_village)->get();
-        return view('admin.familymember', compact('familyMembers'));
+        $users = User::where('v_village', $village)
+                ->orWhere('c_village', $village)
+                ->get();
+        return view('admin.familymember', compact('village', 'users'));
     }
 
     private function maskemail($email)

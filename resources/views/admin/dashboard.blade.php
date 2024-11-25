@@ -58,5 +58,4 @@
     </div>
 </section>
 
-
-    @include('layouts.footer')
+@include('layouts.footer')

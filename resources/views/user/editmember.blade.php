@@ -1,17 +1,34 @@
-@include('layouts.header')
+@include('layouts.userheader')
+<section class="content-header">
+  <div class="container-fluid">
+      <div class="row mb-2">
+          <div class="col-sm-6">
+              <h1>Detail</h1>
+          </div>
+          <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item"><a href="">Home</a></li>
+                  <li class="breadcrumb-item active">Detail</li>
+              </ol>
+          </div>
+      </div>
+  </div>
+</section>
+<a href="{{route('family.user')}}" class="btn btn-primary ml-4 mb-3"> 
+    <i class="bi bi-arrow-left me-1"></i> Back
+</a>
 <section class="content">
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12 mb-3">
-        <div class="card shadow mt-3" style="border-radius: 10px;">
-          <div class="card-header" style="background-color: powderblue; border-top-left-radius: 10px; border-top-right-radius: 10px;">
-            <h3 class="card-title mt-1 ml-2">Profile</h3>
-          </div>
+        <div class="card shadow" style="border-radius: 10px;">
           <div class="card-body">
-            <form class="form-container" action="{{route('admin.profile.update')}}" method="POST" style="padding: 20px;">
+
+            <form class="form-container" action="{{route('user.update')}}" method="POST" style="padding: 20px;">
               @csrf 
               <div class="form-group">
                 <div class="row">
+                    <input type="hidden" name="id" value="{{$users->id}}">
                     <div class="col-md-3">
                       <label for="firstname">First Name</label>
                       <input type="text" name="first_name" class="form-control mb-3" id="Inputuser1" aria-describeby="usernameHelp" value="{{$users->first_name}}">
@@ -52,7 +69,7 @@
                            @if($users->gender == 'female') checked @endif> Female
                         </label>
                       </div>
-                    </div>    
+                    </div>   
                     <div class="col-md-6">
                       <label for="marital_status">Marital Status</label>
                       <div>
@@ -77,7 +94,7 @@
                     <div class="col-md-6">
                       <label for="email">Email</label>
                       <input type="email" name="email" class="form-control mb-3" id="Inputuser1" aria-describeby="usernameHelp" value="{{$users->email}}">
-                    </div>  
+                    </div>      
                     <h5>Current Address</h5>
                     <div class="col-md-3">
                       <label for="c_address">Address</label>

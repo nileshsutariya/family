@@ -68,34 +68,43 @@
                     @endforeach
                 </tbody>
             </table>
-            {{-- <div>
-                {{ $events->links() }}
-            </div>  --}}
+            <div id="pagination_links">
+                {{-- {{ $events->links() }} --}}
+            </div> 
         </div>
     </div>
 </section>
 
 <script type="text/javascript">
-    $(document).ready(function() {
-        $(document).on("click", "#eventstatus", function() {
-            var id=$(this).attr("data-val");  
-            console.log(id);
-            
-            $.ajax ({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: "{{route('eventstatus')}}", 
-                data: {
-                    'id':id,
-                },
-                type: 'GET',
-                success: function(data) {
-                    console.log(data);
-                    $('#event_table_body').html($(data).find('#event_table_body').html());
-                }
-            });
-        });
+   $(document).on("click", "#eventstatus", function() {
+    var id = $(this).attr("data-val");  
+
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: "{{route('eventstatus')}}", 
+        data: { 'id': id },
+        type: 'GET',
+        success: function(data) {
+            console.log(data);
+
+            // Find the status button by event ID
+            var statusButton = $('a#eventstatus[data-val="' + id + '"]');
+
+            // Update the button text and class based on the new status
+            if (data.event_status == 0) {
+                statusButton.text('Upcoming').removeClass('btn-info btn-success btn-danger').addClass('btn-warning');
+            } else if (data.event_status == 1) {
+                statusButton.text('Ongoing').removeClass('btn-warning btn-success btn-danger').addClass('btn-info');
+            } else if (data.event_status == 2) {
+                statusButton.text('Completed').removeClass('btn-warning btn-info btn-danger').addClass('btn-success');
+            } else {
+                statusButton.text('Cancelled').removeClass('btn-warning btn-info btn-success').addClass('btn-danger');
+            }
+        }
     });
+    });
+
 </script>
 @include('layouts.footer')

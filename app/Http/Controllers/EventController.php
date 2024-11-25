@@ -12,7 +12,6 @@ class EventController extends Controller
     public function create()
     {
         $users = User::all();
-        // $event = Events::all();
         return view('admin.add-event',['mode' => 'add'], compact('users'));
     }
     public function eventstore(Request $request)

@@ -85,5 +85,8 @@
             @endforeach
         </tbody>
     </table>
+    <div>
+        {{ $members->links('pagination::bootstrap-5') }}
+    </div> 
 </div>
 @include('layouts.footer')

@@ -1,7 +1,7 @@
 @include('layouts.header')
 <section class="content">
     <div class="container-fluid">
-        <a href="{{route('family.village')}}" class="btn btn-primary ml-3 mt-2">            
+        <a href="{{route('family.village')}}" class="btn btn-primary ml-2 mt-2">            
             <i class="bi bi-arrow-left me-1"></i> Back
         </a>
         <div class="row">
@@ -49,6 +49,7 @@
                                 <th>Mother Name</th>
                                 <th>Last Name</th>
                                 <th>Phone No</th>
+                                <th>Current Village</th>
                                 <th>Village</th>
                                 <th>Actions</th>
                             </tr>
@@ -70,7 +71,8 @@
                                         @else
                                             {{$members->ph_no}}    
                                         @endif
-                                    </td>                                
+                                    </td>          
+                                    <td>{{$members->c_village}}</td>                      
                                     <td>{{$members->v_village}}</td>
                                     <td>
                                         @if ($members->gender === 'female')

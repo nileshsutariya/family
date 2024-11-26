@@ -22,11 +22,6 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/register', [UserController::class, 'register'])->name('register');
 Route::post('/store',[UserController::class, 'store'])->name('store');
 
-Route::get('/district-suggestions', [DistrictController::class, 'getSuggestions'])->name('district.suggestions');
-Route::get('/taluka-suggestions', [TalukaController::class, 'getSuggestions'])->name('taluka.suggestions');
-Route::get('/village-suggestions', [VillageController::class, 'getSuggestions'])->name('village.suggestions');
-
-
 Route::middleware(['auth', 'users:0'])->group(function () {
     Route::group(['prefix'=>'user'], function () {
         Route::get('/dashboard', [UserController::class, 'index'])->name('user.dashboard');
@@ -36,9 +31,7 @@ Route::middleware(['auth', 'users:0'])->group(function () {
         Route::get('/viewevent', [UserController::class, 'viewevent'])->name('view.user.event');
     
         Route::get('family/members', [UserController::class, 'userview'])->name('family.user');
-
-        // Route::get('/female', [UserController::class, 'checkAndDeleteUnmatchedSpouse'])->name('female.married');
-
+        
         Route::get('/profile', [UserController::class, 'profile'])->name('profile');
         Route::post('/profile/update', [UserController::class, 'profileupdate'])->name('profile.update');
     });

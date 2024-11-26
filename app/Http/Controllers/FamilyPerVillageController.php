@@ -17,12 +17,14 @@ class FamilyPerVillageController extends Controller
             'v_village', 
             'v_district', 
             'v_taluka', 
-            DB::raw('count(*) as total')
+            DB::raw('count(*) as total'),
+            // DB::raw('SUM(v_village IS NOT NULL) as village_user_count'),
+            // DB::raw('SUM(c_village IS NOT NULL) as c_village_user_count')
         )
         ->groupBy(
             'v_village',
-             'c_village', 'c_district' ,'c_taluka', 
-             'v_district', 'v_taluka')
+            'c_village', 'c_district' ,'c_taluka', 
+            'v_district', 'v_taluka')
         ->get();
 
         foreach ($villages as $village) {

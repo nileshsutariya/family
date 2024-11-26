@@ -56,5 +56,8 @@
             @endforeach
         </tbody>
     </table>
+    <div>
+        {{ $events->links('pagination::bootstrap-5') }}
+    </div> 
 </div>
 @include('layouts.footer')

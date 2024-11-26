@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\District;
+use App\Models\Education;
 use App\Models\Village;
 use Carbon\Carbon;
 use App\Models\User;
@@ -45,7 +46,8 @@ class UserController extends Controller
         $district = District::all();
         $taluka = Taluka::all();
         $village = Village::all();
-        return view('register', compact('district', 'taluka', 'village'));
+        $education = Education::all();
+        return view('register', compact('district', 'taluka', 'village', 'education'));
     }
     public function store(Request $request)
     {
@@ -208,8 +210,8 @@ class UserController extends Controller
     }
     public function viewevent()
     {
-        $users = User::all();
-        $events = Events::thisWeek()->leftJoin('users','users.id','=','events.organizer')->select('events.*','users.first_name as organizer')->get();
+        $users = User::paginate(10);
+        $events = Events::thisWeek()->leftJoin('users','users.id','=','events.organizer')->select('events.*','users.first_name as organizer')->paginate(10);
         return view('user.viewevents', compact('users', 'events'));
     }
     public function profile()
@@ -217,7 +219,7 @@ class UserController extends Controller
         $users = Auth::user();
         return view('user.profile', compact('users'));
     }
-    public function profileupdate(Request $request)
+    public function profileupdate(Request $request, $userId)
     {
         $users = Auth::user();
         $users->first_name = $request['first_name'];
@@ -227,6 +229,8 @@ class UserController extends Controller
         $users->ph_no = $request['ph_no'];
         $users->date_of_birth = $request['date_of_birth'];
         $users->blood_group = $request['blood_group'];
+        $users->marital_status = $request['marital_status'];
+        $users->spouse_name = $request['spouse_name'];
         $users->gender = $request['gender'];
         $users->c_address = $request['c_address'];
         $users->c_district = $request['c_district'];
@@ -241,7 +245,7 @@ class UserController extends Controller
         $users->company_name = $request['company_name'];
         $users->business_category = $request['business_category'];
         $users->save();
-        return redirect()->route('profile')->with('update', 'User Updated Successfully!!');
+        return redirect()->route('profile')->with('update', 'Profile Updated Successfully!!');
     }
     public function userview()
     {
@@ -278,30 +282,9 @@ class UserController extends Controller
 
         $members = User::whereIn('ph_no', $relatedPhones)
                     ->orWhereIn('elder_ph_no', $relatedPhones)
-                    ->get();
+                    ->paginate(10);
 
         return view('user.members', compact('members'));
     }
-
-    // public function checkAndDeleteUnmatchedSpouse()
-    // {
-    //     // Retrieve all female users (assuming a gender column with 'female' as a value)
-    //     $femaleUsers = User::where('gender', 'female')->get();
-
-    //     // Loop through each female user
-    //     foreach ($femaleUsers as $female) {
-    //         $spouseName = $female->spouse_name;
-
-    //         // Check if the spouse_name exists in the first_name field of any other user
-    //         $spouseExists = User::where('first_name', $spouseName)->exists();
-
-    //         // If no matching first_name is found for the spouse, delete the female user record
-    //         if (!$spouseExists) {
-    //             $female->delete();
-    //         }
-    //     }
-
-    //     return response()->json(['message' => 'Unmatched spouse records have been checked and deleted if needed.']);
-    // }
 
 }

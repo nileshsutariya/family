@@ -1,12 +1,27 @@
 @include('layouts.header')
+<section class="content-header">
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-sm-6">
+              <h1 class="ml-2">Profile</h1>
+          </div>
+          <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item"><a href="">Home</a></li>
+                  <li class="breadcrumb-item active">Profile</li>
+              </ol>
+          </div>
+      </div>
+  </div>
+</section>
 <section class="content">
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12 mb-3">
         <div class="card shadow mt-3" style="border-radius: 10px;">
-          <div class="card-header" style="background-color: powderblue; border-top-left-radius: 10px; border-top-right-radius: 10px;">
-            <h3 class="card-title mt-1 ml-2">Profile</h3>
-          </div>
+          {{-- <div class="card-header" style="background-color: powderblue; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+            <h2 class="card-title mt-1 ml-2"><i class="fa-solid fa-user mr-2"></i>Profile</h2>
+          </div> --}}
           <div class="card-body">
             <form class="form-container" action="{{route('admin.profile.update')}}" method="POST" style="padding: 20px;">
               @csrf 
@@ -53,7 +68,7 @@
                         </label>
                       </div>
                     </div>    
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                       <label for="marital_status">Marital Status</label>
                       <div>
                         <label class="mr-3">
@@ -70,11 +85,17 @@
                         </label>
                         <label class="mr-3">
                             <input type="radio" name="marital_status" value="widow/divorcee"
-                            @if($users->marital_status == 'widow/divorcee') checked @endif> Widow/ Divorcee
+                            @if($users->marital_status == 'widow/divorcee') checked @endif> Widow/Divorcee
                         </label>
                       </div>
                     </div>    
-                    <div class="col-md-6">
+                    <div class="col-md-12" id="spouse-name-field" style="display: none;">
+                      <div class="mb-3 mt-2">
+                          <label for="spousename" class="form-label">Husband/Wife Name</label>
+                          <input type="text" name="spouse_name" class="form-control" id="spousename" placeholder="Enter Spouse Name" value="{{$users->spouse_name}}">
+                      </div>
+                    </div>
+                    <div class="col-md-12">
                       <label for="email">Email</label>
                       <input type="email" name="email" class="form-control mb-3" id="Inputuser1" aria-describeby="usernameHelp" value="{{$users->email}}">
                     </div>  
@@ -112,19 +133,38 @@
                       <label for="v_village">Village</label>
                       <input type="text" name="v_village" class="form-control mb-3" id="Inputuser3" aria-describeby="usernameHelp" value="{{$users->v_village}}">
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                       <label for="education">Education</label>
                       <input type="text" name="education" class="form-control mb-3" id="Inputuser1" aria-describeby="usernameHelp" value="{{$users->education}}">
                     </div>
-                    <div class="col-md-6">
-                      <label for="profession">Profession</label>
-                      <input type="text" name="profession" class="form-control mb-3" id="Inputuser1" aria-describeby="usernameHelp" value="{{$users->profession}}">
+                    <div class="col-md-12 mb-2">
+                      <label for="col-md-12">Profession</label>
+                      <div>
+                        <label class="mr-3">
+                            <input type="radio" name="profession" value="job"
+                            @if($users->profession == 'job') checked @endif> Job
+                        </label>
+                        <label class="mr-3">
+                            <input type="radio" name="profession" value="business"
+                            @if($users->profession == 'business') checked @endif> Business
+                        </label>
+                        <label class="mr-3">
+                            <input type="radio" name="profession" value="findingjob"
+                            @if($users->profession == 'findingjob') checked @endif> Finding Jobs
+                        </label>
+                        <label class="mr-3">
+                            <input type="radio" name="profession" value="student"
+                            @if($users->profession == 'student') checked @endif> Student
+                        </label>
+                      </div>
                     </div>
-                    <div class="col-md-6">
-                      <label for="companyname">Company Name</label>
-                      <input type="text" name="company_name" class="form-control mb-3" id="Inputuser1" aria-describeby="usernameHelp" value="{{$users->company_name}}">
+                    <div class="col-md-12" id="company-name" style="display: none;">
+                      <div>
+                        <label for="companyname">Company Name</label>
+                        <input type="text" name="company_name" class="form-control mb-3" id="company_name" aria-describeby="usernameHelp" value="{{$users->company_name}}">
+                      </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                       <label for="businesscategory">Business Category</label>
                       <input type="text" name="business_category" class="form-control mb-3" id="Inputuser1" aria-describeby="usernameHelp" value="{{$users->business_category}}">
                     </div>
@@ -139,4 +179,48 @@
     </div>
   </div>
 </section>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+      if ($('input[name="marital_status"]:checked').val() === 'married') {
+          $('#spouse-name-field').show();
+      } else {
+          $('#spouse-name-field input').val(''); 
+      }
+
+      $('input[name="marital_status"]').on('change', function() {
+          if ($(this).val() === 'married') {
+              $('#spouse-name-field').show();
+          } else {
+              $('#spouse-name-field').hide();
+              $('#spouse-name-field input').val(''); 
+          }
+      });
+
+      if ($('input[name="profession"]:checked').val() === 'job' || $('input[name="profession"]:checked').val() === 'business') {
+          $('#company-name').show();
+      } else {
+          $('#company-name input').val(''); 
+      }
+
+      $('input[name="profession"]').on('change', function() {
+          const selectedValue = $(this).val();
+          if (selectedValue === 'job' || selectedValue === 'business') {
+              $('#company-name').show();
+          } else {
+              $('#company-name').hide();
+              $('#company-name input').val(''); 
+          }
+      });
+
+      $('form').on('submit', function() {
+          if ($('#spouse-name-field').is(':hidden')) {
+              $('#spouse-name-field input').val(null);
+          }
+          if ($('#company-name').is(':hidden')) {
+              $('#company-name input').val(null);
+          }
+      });
+  });
+</script>
 @include('layouts.footer')

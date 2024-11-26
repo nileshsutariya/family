@@ -39,8 +39,8 @@ class AdminController extends Controller
                 ]); 
             }
         }
-        $users = User::all();
-        $events= Events::leftJoin('users','users.id','=','events.organizer')->select('events.*','users.first_name as organizer')->with('organizer')->get();
+        $users = User::paginate(10);
+        $events= Events::leftJoin('users','users.id','=','events.organizer')->select('events.*','users.first_name as organizer')->with('organizer')->paginate(10);
         return view('admin.viewevents', compact('users', 'events'));
     }
     
@@ -65,6 +65,7 @@ class AdminController extends Controller
         $users->blood_group = $request['blood_group'];
         $users->gender = $request['gender'];
         $users->marital_status = $request['marital_status'];
+        $users->spouse_name = $request['spouse_name'];
         $users->email = $request['email'];
         $users->c_address = $request['c_address'];
         $users->c_district = $request['c_district'];

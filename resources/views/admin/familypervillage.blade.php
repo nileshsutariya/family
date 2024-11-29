@@ -17,7 +17,7 @@
 <section class="content py-4">
     <div class="container-fluid">
         <div class="row">
-            @foreach ($villages as $user)
+            @foreach ($v_villages as $user)
                 <div class="col-md-6 col-lg-6">
                     <div class="card card-outline card-secondary shadow h-80">
                         <div class="card-body">
@@ -38,13 +38,15 @@
                                     <i class="fas fa-users me-2"></i>
                                     {{ $user->village_user_count }} members
                                 </span>
-                                <a href="{{ route('family.members', ['village' => $user->v_village]) }}" class="btn btn-outline-secondary btn-sm text-decoration-none">
+                                <a href="{{ route('family.members', ['village' => $user->v_village, 'district' => $user->v_district, 'taluka' => $user->v_taluka]) }}" class="btn btn-outline-secondary btn-sm text-decoration-none">
                                     View Details
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
+            @endforeach
+            @foreach ($c_villages as $user)
                 <div class="col-md-6 col-lg-6">
                     <div class="card card-outline card-secondary shadow h-80">
                         <div class="card-body">
@@ -65,7 +67,7 @@
                                     <i class="fas fa-users me-2"></i>
                                     {{ $user->c_village_user_count }} members
                                 </span>
-                                <a href="{{ route('family.members', ['village' => $user->v_village]) }}" class="btn btn-outline-secondary btn-sm text-decoration-none">
+                                <a href="{{ route('family.members', ['village' => $user->c_village, 'district' => $user->c_district, 'taluka' => $user->c_taluka]) }}" class="btn btn-outline-secondary btn-sm text-decoration-none">
                                     View Details
                                 </a>
                             </div>

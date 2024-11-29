@@ -10,9 +10,8 @@ class BaseController extends Controller
 {
     public function apisuccess($result, $message)
     {
-        $data = Http::get('http://localhost/family/');
+        $data = Http::get('http://192.168.1.169/family/');
         $status = $data->status();
-        // print_r($status); die;
         if ($data->successful()) {
             return response()->json([
                 'success' => true,
@@ -32,7 +31,10 @@ class BaseController extends Controller
     {
         if (isset($errorMessages['id_not_found'])) {
             $status = 404; 
-        };
+        }
+        elseif (isset($errorMessages['server_error'])) {
+            $status = 500; 
+        }
 
         return response()->json([
             'success' => false,

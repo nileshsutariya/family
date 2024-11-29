@@ -45,9 +45,9 @@ Route::middleware(['auth', 'users:1'])->group(function () {
 
         Route::get('/view/family/byvillage', [FamilyPerVillageController::class, 'familybyvillage'])->name('family.village');
 
-        Route::get('/family-members/{village}', [FamilyInformationController::class, 'familyinfo'])->name('family.members');
+        Route::get('/family-members', [FamilyInformationController::class, 'familyinfo'])->name('family.members');
 
-        Route::get('/family', [AdminController::class, 'familyinfo'])->name('family.info');
+        Route::get('/approval', [AdminController::class, 'approval'])->name('user-approval');
 
         Route::get('/adminprofile', [AdminController::class, 'profile'])->name('admin.profile');
         Route::post('/profile/update', [AdminController::class, 'updateprofile'])->name('admin.profile.update');

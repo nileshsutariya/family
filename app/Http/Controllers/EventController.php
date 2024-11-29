@@ -61,7 +61,6 @@ class EventController extends Controller
     public function edit($id)
     {
         $users = User::all();
-        // $event = Events::all();
         $events = Events::find($id);
         return view("admin.add-event",['mode' => 'edit'],compact('events', 'users'));
     }

@@ -81,18 +81,15 @@
             <li class="nav-item">
               <a href="{{route('family.village')}}" class="nav-link">
                 <i class="nav-icon fa-solid fa-people-roof"></i>
-                <p>Family Information 
-                  {{-- <p class="ml-5">Village --}}
-                  {{-- </p> --}}
-                </p>
+                <p>Family Information</p>
               </a>
             </li>
-            {{-- <li class="nav-item">
-              <a href="{{route('family.info')}}" class="nav-link ">
+            <li class="nav-item">
+              <a href="{{route('user-approval')}}" class="nav-link ">
                 <i class="nav-icon fa-solid fa-users"></i>
-                <p>Family Members Info.</p>
+                <p>Users Approval</p>
               </a>
-            </li> --}}
+            </li>
             <li class="nav-item">
               <a href="{{route('admin.profile')}}" class="nav-link ">
                 <i class="nav-icon fa-solid fa-user"></i>

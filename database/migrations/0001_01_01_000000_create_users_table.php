@@ -40,10 +40,10 @@ return new class extends Migration
             $table->string('profession');
             $table->string('company_name')->nullable();
             $table->string('business_category')->nullable();
-            
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->foreign('parent_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('role_type')->default(0)->comment('0 is user , 1 is admin');
+            $table->string('approve_status')->default(0)->comment('1 is Approved , 0 is Pending');
             $table->rememberToken();
             $table->timestamps();
         });

@@ -78,18 +78,9 @@
             <li class="nav-item">
               <a href="{{route('family.user')}}" class="nav-link">
                 <i class="nav-icon fa-solid fa-people-roof"></i>
-                <p>Family Members 
-                  {{-- <p class="ml-5">Village --}}
-                  {{-- </p> --}}
-                </p>
+                <p>Family Members</p>
               </a>
             </li>
-            {{-- <li class="nav-item">
-              <a href="{{route('family.info')}}" class="nav-link ">
-                <i class="nav-icon fa-solid fa-users"></i>
-                <p>Family Members Info.</p>
-              </a>
-            </li> --}}
             <li class="nav-item">
               <a href="{{route('profile')}}" class="nav-link ">
                 <i class="nav-icon fa-solid fa-user"></i>

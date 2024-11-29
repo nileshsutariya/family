@@ -7,14 +7,26 @@ use App\Models\User;
 
 class FamilyInformationController extends Controller
 {
-    public function familyinfo($village)
+    public function familyinfo(Request $request)
     {
-        $users = User::where('v_village', $village)
-                ->orWhere('c_village', $village)
-                ->get();
-        return view('admin.familymember', compact('village', 'users'));
+        $village = $request->village;
+        $district = $request->district;
+        $taluka = $request->taluka;
+    
+        $users = User::where(function ($query) use ($village, $district, $taluka) {
+            $query->where('v_village', $village)
+                  ->where('v_district', $district)
+                  ->where('v_taluka', $taluka);
+        })
+        ->orWhere(function ($query) use ($village, $district, $taluka) {
+            $query->where('c_village', $village)
+                  ->where('c_district', $district)
+                  ->where('c_taluka', $taluka);
+        })
+        ->get();
+    
+        return view('admin.familymember', compact('users', 'village', 'district', 'taluka'));
     }
-
     private function maskemail($email)
     {
         $parts = explode('@', $email);

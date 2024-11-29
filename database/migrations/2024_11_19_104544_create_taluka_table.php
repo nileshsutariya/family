@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('taluka', function (Blueprint $table) {
             $table->id();
             $table->string('taluka');
-            $table->unsignedBigInteger('district_id')->nullable();
-            $table->foreign('district_id')->references('id')->on('district')->onDelete('cascade');
             $table->timestamps();
         });
     }

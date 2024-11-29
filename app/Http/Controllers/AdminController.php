@@ -43,11 +43,6 @@ class AdminController extends Controller
         $events= Events::leftJoin('users','users.id','=','events.organizer')->select('events.*','users.first_name as organizer')->with('organizer')->paginate(10);
         return view('admin.viewevents', compact('users', 'events'));
     }
-    
-    public function familyinfo()
-    {
-        return view('admin.familymember');
-    }
     public function profile()
     {
         $users = Auth::user();
@@ -81,5 +76,23 @@ class AdminController extends Controller
         $users->business_category = $request['business_category'];
         $users->save();
         return redirect()->route('admin.profile')->with('update', 'Profile Updated Successfully!!');
+    }
+    public function approval(Request $request)
+    {
+        $users = User::where('approve_status', 0)->get();
+        if ($request->id) {
+            $query = User::where('id',$request->id)->first();
+            if($query){
+                if($query->approve_status == "0") {
+                    $query->approve_status = "1";
+                }
+                $query->save();
+
+                return response()->json([
+                    'approve_status' => $query->approve_status
+                ]); 
+            }
+        }
+        return view('admin.user-approval',compact('users'));
     }
 }

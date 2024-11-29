@@ -14,10 +14,6 @@ return new class extends Migration
         Schema::create('village', function (Blueprint $table) {
             $table->id();
             $table->string('village');
-            $table->unsignedBigInteger('district_id')->nullable();
-            $table->foreign('district_id')->references('id')->on('district')->onDelete('cascade');
-            $table->unsignedBigInteger('taluka_id')->nullable();
-            $table->foreign('taluka_id')->references('id')->on('taluka')->onDelete('cascade');
             $table->timestamps();
         });
     }

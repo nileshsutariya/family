@@ -19,20 +19,36 @@ class LoginController extends Controller
         ]);
         $credentials = $request->only('ph_no', 'password');
         $ph_no = $request->ph_no;
+
+        // if (Auth::attempt($credentials)) {
+        //     $users = Auth::user();
+        //     if ($users->role_type == '1' && $users->approve_status == '1') {
+        //         return redirect()->route('admin.dashboard');
+        //     } elseif($users->role_type == '0' && $users->approve_status == '1') {
+        //         return redirect()->route('user.dashboard');
+        //     }
+        //     else{
+        //         return redirect()->back()->with('error', 'Wait For Approval.');                                           
+        //     }
+        // }
+
+        
         if (Auth::attempt($credentials)) {
-            $users = Auth::user();
-            if ($users->role_type == '1') {
-                return redirect()->route('admin.dashboard');
-            } else {
-                return redirect()->route('user.dashboard');
+            $user = Auth::user();
+        
+            if ($user->approve_status != '1') {
+                return redirect()->route('login')->with('message', 'Wait For Approval.');
             }
+        
+            return $user->role_type == '1'
+                ? redirect()->route('admin.dashboard')
+                : redirect()->route('user.dashboard');
         }
-        return redirect()->back()->withInput()->withErrors('error', 'Invalid credentials.');                                           
+        return redirect()->route('login')->with('message', 'Invalid credentials.');                                           
     }
     public function logout(Request $request)
     {
-        if(Auth::logout())
-        {
+        if(Auth::logout()) {
             return redirect()->route('login');
         }
         else {

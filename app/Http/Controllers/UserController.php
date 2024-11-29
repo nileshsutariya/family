@@ -133,7 +133,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $users = User::find($id);
-        return view("user.editmember",compact('users'));
+        return view('user.editmember',compact('users'));
     }
     public function update(Request $request)
     {
@@ -219,9 +219,10 @@ class UserController extends Controller
         $users = Auth::user();
         return view('user.profile', compact('users'));
     }
-    public function profileupdate(Request $request, $userId)
+    public function profileupdate(Request $request)
     {
         $users = Auth::user();
+        // print_r('fvgbhnj'); die;
         $users->first_name = $request['first_name'];
         $users->father_name = $request['father_name'];
         $users->mother_name = $request['mother_name'];

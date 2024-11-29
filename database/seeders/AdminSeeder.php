@@ -30,10 +30,10 @@ class AdminSeeder extends Seeder
             'gender' => 'male',
             'date_of_birth' => Carbon::create('1992', '12', '25')->format('Y-m-d'),
             'blood_group' => 'A+',
-            'c_address' => 'surat',
-            'c_district' => 'surat', 
-            'c_taluka' => 'surat',
-            'c_village' => 'surat',
+            'c_address' => 'mumbai',
+            'c_district' => 'mumbai', 
+            'c_taluka' => 'mumbai',
+            'c_village' => 'mumbai',
             'v_address' => 'bhavnagar',
             'v_district' => 'bhavnagar', 
             'v_taluka' => 'bhavnagar',
@@ -42,7 +42,8 @@ class AdminSeeder extends Seeder
             'profession' => 'business',
             'company_name' => 'company',
             'business_category' => 'company',
-            'role_type' => '1'
+            'role_type' => '1',
+            'approve_status' => '1'
         ]);
     }
 }

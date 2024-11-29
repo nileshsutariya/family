@@ -54,8 +54,6 @@ class User extends Authenticatable
     {
         return $this->belongsTo(User::class, 'parent_id');
     }
-
-    // Define the children relationship if needed
     public function parent()
     {
         return $this->hasMany(User::class, 'parent_id');

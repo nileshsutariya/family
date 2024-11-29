@@ -41,7 +41,7 @@
                 <th>Profession</th>
                 <th>Company Name</th>
                 <th>Business Category</th>
-                <th>Action</th>
+                <th colspan="2">Action</th>
             </tr>
         </thead>
         <tbody id="event_table_body">
@@ -77,6 +77,8 @@
                         <a class="btn btn-sm btn-outline-primary" href="{{ route('user.edit', $value->id) }}">
                             <i class="fas fa-edit"></i>
                         </a>
+                    </td>
+                    <td>
                         <a class="btn btn-sm btn-outline-danger" href="{{ route('user.delete', $value->id) }}">
                             <i class="fas fa-trash-alt"></i>
                         </a>

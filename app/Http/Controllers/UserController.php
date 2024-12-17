@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\District;
-use App\Models\Education;
-use App\Models\Village;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Events;
 use App\Models\Taluka;
+use App\Models\Village;
+use App\Models\District;
+use App\Models\Education;
 use Illuminate\Http\Request;
+use App\Models\BusinessCategory;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -38,47 +40,101 @@ class UserController extends Controller
             ->select('events.*','users.first_name as organizer')
             ->where('event_status',3)
             ->count();
-            
-        return view('user.dashboard', compact('upcoming', 'ongoing', 'completed', 'cancelled'));
+        $users = User::all();
+        return view('user.dashboard', compact('users', 'upcoming', 'ongoing', 'completed', 'cancelled'));
     }
-    public function register()
+    public function register(Request $request)
     {
-        $district = District::all();
-        $taluka = Taluka::all();
-        $village = Village::all();
+        $users = DB::table('users')
+                ->leftJoin('district as cd', 'cd.id', '=', 'users.c_district')
+                ->leftJoin('taluka as ct', 'ct.id', '=', 'users.c_taluka')
+                ->leftJoin('village as cv', 'cv.id', '=', 'users.c_village')
+                ->leftJoin('district as vd', 'vd.id', '=', 'users.v_district')
+                ->leftJoin('taluka as vt', 'vt.id', '=', 'users.v_taluka')
+                ->leftJoin('village as vv', 'vv.id', '=', 'users.v_village')
+                ->select(
+                    'users.*',
+                    'cd.district as c_district_name',
+                    'ct.taluka as c_taluka_name',
+                    'cv.village as c_village_name',
+                    'vd.district as v_district_name',
+                    'vt.taluka as v_taluka_name',
+                    'vv.village as v_village_name'
+                )
+                ->get();
+    
+        $districts = District::all();
+        $talukas = Taluka::all();
+        $villages = Village::limit(100)->get();
+
+        // print_r($village);
+        // die();
+        // $district = District::all();
+       
+        // $talukas = $request->c_district 
+        //         ? Taluka::where('district', $request->c_district)->get() 
+        //         : collect();
+
+        // print_r($talukas); die;
+        // $villages = $request->district && $request->taluka 
+        //         ? Village::where('district', $request->district)
+        //             ->where('taluka_id', $request->taluka)
+        //             ->get()
+        //         : [];
+
+
         $education = Education::all();
-        return view('register', compact('district', 'taluka', 'village', 'education'));
+        $business_category = BusinessCategory::all();
+
+        return view('register', compact( 'users', 'districts', 'talukas', 'villages', 'education', 'business_category'));
     }
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'elder' => 'required|in:yes,no',
-            'elder_ph_no' => 'nullable|string',
-            'ph_no' => 'required|string',
-            'password' => 'required',
-            'first_name' => 'required',
-            'father_name' => 'required',
-            'mother_name' => 'required',
-            'last_name' => 'required',
+            'elder_ph_no' => 'nullable|required_if:elder,no|string|regex:/^[0-9]{10}$/',
+            'ph_no' => 'required|string|regex:/^[0-9]{10}$/',
+            'password' => 'required|string|min:6',
+            'first_name' => 'required|alpha',
+            'father_name' => 'required|alpha',
+            'mother_name' => 'required|alpha',
+            'last_name' => 'required|alpha',
             'marital_status' => 'required',
-            'spouse_name' => 'nullable',
-            'email' => 'nullable',
+            'spouse_name' => 'nullable|alpha|required_if:marital_status,married|string',
+            'email' => 'nullable|email',
             'gender' => 'required',
-            'date_of_birth' => 'nullable',
+            'date_of_birth' => 'required|date',
             'blood_group' => 'required',
-            'c_address' => 'required',
+            'c_address' => 'required|string',
             'c_district' => 'required',
             'c_taluka' => 'required',
             'c_village' => 'required',
-            'v_address' => 'required',
+            'v_address' => 'required|string',
             'v_district' => 'required',
             'v_taluka' => 'required',
             'v_village' => 'required',
-            'education' => 'nullable',
+            'education' => 'required',
             'profession' => 'required',
-            'company_name' => 'nullable',
-            'business_category' => 'nullable',
+            'company_name' => 'nullable|required_if:profession,job,business|string',
+            'business_category' => 'required',
+            'profile_photo' => 'nullable|file|mimes:jpeg,jpg,png',
+            'document_type' => 'required|string',
+            'document_upload' => 'required|file|mimes:pdf,jpeg,jpg,png',
             'parent_id' => 'nullable'
+        ],
+        [
+            'elder_ph_no.required' => 'The elder phone number is required.',
+            'elder_ph_no.regex' => 'The elder phone number must be digits.',
+            'ph_no.required' => 'The phone number is required.',
+            'ph_no.regex' => 'The phone number must be 10 digits.',
+            'c_address' => 'The current address is required.',
+            'c_district' => 'The current district is required.',
+            'c_taluka' => 'The current taluka is required.',
+            'c_village' => 'The current village is required.',
+            'v_address' => 'The village address is required.',
+            'v_district' => 'The village district is required.',
+            'v_taluka' => 'The village taluka is required.',
+            'v_village' => 'The village name is required.',
         ])->validate();
 
         $parentid = null;
@@ -90,7 +146,32 @@ class UserController extends Controller
         }
         
         $parentid = $rootUser ? $rootUser->id : null;
+
+        if ($request->hasFile('profile_photo')) {
+            $profilePhoto = $request->file('profile_photo');
+            $profilePhotoName = time() . '_profile_' . $profilePhoto->getClientOriginalName();
+            $profilePhotoPath = '/profile';
+            $profilePhoto->move(public_path($profilePhotoPath), $profilePhotoName);
+        } else {
+            $profilePhotoName = null;
+        }
         
+        if ($request->hasFile('document_upload')) {
+            $documentUpload = $request->file('document_upload');
+            $documentUploadName = time() . '_document_' . $documentUpload->getClientOriginalName();
+            $documentUploadPath = '/documents';
+            $documentUpload->move(public_path($documentUploadPath), $documentUploadName);
+        } else {
+            $documentUploadName = null;
+        }
+        
+        $c_district_name = District::where('id', $request->c_district)->value('district');
+        $c_taluka_name = Taluka::where('id', $request->c_taluka)->value('taluka');
+        $c_village_name = Village::where('id', $request->c_village)->value('village');
+        $v_district_name = District::where('id', $request->v_district)->value('district');
+        $v_taluka_name = Taluka::where('id', $request->v_taluka)->value('taluka');
+        $v_village_name = Village::where('id', $request->v_village)->value('village');    
+
         $users = User::updateOrCreate(
             ['ph_no' => $request->ph_no], 
             [
@@ -109,21 +190,34 @@ class UserController extends Controller
                 'date_of_birth' => $request->date_of_birth,
                 'blood_group' => $request->blood_group,
                 'c_address' => $request->c_address,
-                'c_district' => $request->c_district,
-                'c_taluka' => $request->c_taluka,
-                'c_village' => $request->c_village,
+                'c_district' => $c_district_name,
+                'c_taluka' => $c_taluka_name,
+                'c_village' => $c_village_name,
                 'v_address' => $request->v_address,
-                'v_district' => $request->v_district,
-                'v_taluka' => $request->v_taluka,
-                'v_village' => $request->v_village,
+                'v_district' => $v_district_name,
+                'v_taluka' => $v_taluka_name,
+                'v_village' => $v_village_name,
                 'education' => $request->education,
                 'profession' => $request->profession,
                 'company_name' => $request->company_name,
                 'business_category' => $request->business_category,
+                'profile_photo' => $profilePhotoName,
+                'document_type' => $request->document_type,
+                'document_upload' => $documentUploadName,
                 'parent_id' => $parentid,
             ]
         );
-        return redirect()->route('login')->with('store', 'Registration successful!');            
+        $url = $request->url();
+        if (strpos($url, 'api') == true) {
+            $response = [
+                'status' => 200,
+                'message' => 'User Registered Successfully',
+                'data' => $users,
+            ];
+            return response($response, 200);        
+        } else {
+            return redirect()->route('login')->with('store', 'Registration Successful!!');
+        }
     }
     public function delete($id)
     {
@@ -133,39 +227,58 @@ class UserController extends Controller
     public function edit($id)
     {
         $users = User::find($id);
-        return view('user.editmember',compact('users'));
+        $district = District::all();
+        $taluka = Taluka::all();
+        $village = Village::all();
+        $education = Education::all();
+        $business_category = BusinessCategory::all();
+        return view('user.editmember',compact('users','district','taluka','village','education','business_category'));
     }
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'id' => 'required|exists:users,id',
-            'ph_no' => 'required|string',
-            'first_name' => 'required',
-            'father_name' => 'required',
-            'mother_name' => 'required',
-            'last_name' => 'required',
+            'ph_no' => 'required|string|regex:/^[0-9]{10}$/',
+            'first_name' => 'required|alpha',
+            'father_name' => 'required|alpha',
+            'mother_name' => 'required|alpha',
+            'last_name' => 'required|alpha',
             'marital_status' => 'required',
-            'email' => 'nullable',
+            'spouse_name' => 'nullable|required_if:marital_status,married|string',
+            'email' => 'nullable|email',
             'gender' => 'required',
-            'date_of_birth' => 'nullable',
+            'date_of_birth' => 'nullable|date',
             'blood_group' => 'required',
-            'c_address' => 'required',
+            'c_address' => 'required|string',
             'c_district' => 'required',
             'c_taluka' => 'required',
             'c_village' => 'required',
-            'v_address' => 'required',
+            'v_address' => 'required|string',
             'v_district' => 'required',
             'v_taluka' => 'required',
             'v_village' => 'required',
             'education' => 'nullable',
             'profession' => 'required',
-            'company_name' => 'nullable',
+            'company_name' => 'nullable|required_if:profession,job,business|string',
             'business_category' => 'nullable',
             'parent_id' => 'nullable'
+        ],
+        [
+            'elder_ph_no.required' => 'The elder phone number is required.',
+            'elder_ph_no.regex' => 'The elder phone number must be digits.',
+            'ph_no.required' => 'The phone number is required.',
+            'ph_no.regex' => 'The phone number must be 10 digits.',
+            'c_address' => 'The current address is required.',
+            'c_district' => 'The current district is required.',
+            'c_taluka' => 'The current taluka is required.',
+            'c_village' => 'The current village is required.',
+            'v_address' => 'The village address is required.',
+            'v_district' => 'The village district is required.',
+            'v_taluka' => 'The village taluka is required.',
+            'v_village' => 'The village name is required.',
         ])->validate();
 
         $users = User::find($request->id); 
-        // print_r($users); die;
         $users->first_name = $request['first_name'];
         $users->father_name = $request['father_name'];
         $users->mother_name = $request['mother_name'];
@@ -216,13 +329,76 @@ class UserController extends Controller
     }
     public function profile()
     {
-        $users = Auth::user();
-        return view('user.profile', compact('users'));
+        $users = User::find(auth()->id()); 
+        $user = DB::table('users')
+            ->leftJoin('district as cd', 'cd.id', '=', 'users.c_district')
+            ->leftJoin('taluka as ct', 'ct.id', '=', 'users.c_taluka')
+            ->leftJoin('village as cv', 'cv.id', '=', 'users.c_village')
+            ->leftJoin('district as vd', 'vd.id', '=', 'users.v_district')
+            ->leftJoin('taluka as vt', 'vt.id', '=', 'users.v_taluka')
+            ->leftJoin('village as vv', 'vv.id', '=', 'users.v_village')
+            ->select(
+                'users.*',
+                'cd.district as c_district_name',
+                'ct.taluka as c_taluka_name',
+                'cv.village as c_village_name',
+                'vd.district as v_district_name',
+                'vt.taluka as v_taluka_name',
+                'vv.village as v_village_name'
+            )
+            ->get();
+    
+        $districts = District::all();
+        $talukas = Taluka::all();
+        $villages = Village::limit(300)->get();
+        $education = Education::all();
+        $business_category = BusinessCategory::all();
+        return view('user.profile', compact('users','user', 'districts', 'talukas', 'villages', 'education', 'business_category'));
     }
     public function profileupdate(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            // 'id' => 'required|exists:users,id',
+            'ph_no' => 'required|string|regex:/^\+?[0-9]{10,15}$/',
+            'first_name' => 'required|alpha',
+            'father_name' => 'required|alpha',
+            'mother_name' => 'required|alpha',
+            'last_name' => 'required|alpha',
+            'marital_status' => 'required',
+            'spouse_name' => 'nullable|required_if:marital_status,married|string',
+            'email' => 'nullable|email',
+            'gender' => 'required',
+            'date_of_birth' => 'nullable|date',
+            'blood_group' => 'required',
+            'c_address' => 'required|string',
+            'c_district' => 'required',
+            'c_taluka' => 'required',
+            'c_village' => 'required',
+            'v_address' => 'required|string',
+            'v_district' => 'required',
+            'v_taluka' => 'required',
+            'v_village' => 'required',
+            'education' => 'nullable',
+            'profession' => 'required',
+            'company_name' => 'nullable|required_if:profession,job,business|string',
+            'business_category' => 'nullable',
+        ],
+        [
+            'elder_ph_no.required' => 'The elder phone number is required.',
+            'elder_ph_no.regex' => 'The elder phone number must be digits.',
+            'ph_no.required' => 'The phone number is required.',
+            'ph_no.regex' => 'The phone number must be exactly 10 digits.',
+            'c_address' => 'The current address is required.',
+            'c_district' => 'The current district is required.',
+            'c_taluka' => 'The current taluka is required.',
+            'c_village' => 'The current village is required.',
+            'v_address' => 'The village address is required.',
+            'v_district' => 'The village district is required.',
+            'v_taluka' => 'The village taluka is required.',
+            'v_village' => 'The village name is required.',
+        ])->validate();
+
         $users = Auth::user();
-        // print_r('fvgbhnj'); die;
         $users->first_name = $request['first_name'];
         $users->father_name = $request['father_name'];
         $users->mother_name = $request['mother_name'];
@@ -232,6 +408,7 @@ class UserController extends Controller
         $users->blood_group = $request['blood_group'];
         $users->marital_status = $request['marital_status'];
         $users->spouse_name = $request['spouse_name'];
+        $users->email = $request['email'];
         $users->gender = $request['gender'];
         $users->c_address = $request['c_address'];
         $users->c_district = $request['c_district'];
@@ -252,40 +429,131 @@ class UserController extends Controller
     {
         $user = Auth::user();
         $phone = $user->ph_no;
-
+    
         $visitedPhones = [];
         $relatedPhones = [];
-
+    
         $findRelatedPhones = function ($phone) use (&$visitedPhones, &$relatedPhones, &$findRelatedPhones) {
             if (in_array($phone, $visitedPhones)) {
                 return;
             }
-
+    
             $visitedPhones[] = $phone;
-
+    
             $directMembers = User::where('ph_no', $phone)
                                 ->orWhere('elder_ph_no', $phone)
                                 ->get();
-
+    
             foreach ($directMembers as $member) {
-                if (!in_array($member->ph_no, $relatedPhones) && $member->role_type != '1') {
-                    $relatedPhones[] = $member->ph_no; 
-                    $findRelatedPhones($member->ph_no); 
+                if (!in_array($member->ph_no, $relatedPhones) && $member->approve_status == 1) {
+                    $relatedPhones[] = $member->ph_no;
+                    $findRelatedPhones($member->ph_no);
                 }
-                if (!in_array($member->elder_ph_no, $relatedPhones) && $member->elder_ph_no != NULL) {
+                if (!in_array($member->elder_ph_no, $relatedPhones) && $member->elder_ph_no != NULL && $member->approve_status == 1) {
                     $relatedPhones[] = $member->elder_ph_no;
-                    $findRelatedPhones($member->elder_ph_no); 
+                    $findRelatedPhones($member->elder_ph_no);
                 }
             }
         };
-
+    
         $findRelatedPhones($phone);
-
+    
         $members = User::whereIn('ph_no', $relatedPhones)
-                    ->orWhereIn('elder_ph_no', $relatedPhones)
-                    ->paginate(10);
-
+                        ->orWhereIn('elder_ph_no', $relatedPhones)
+                        ->where('approve_status', 1) 
+                        ->paginate(10);
+    
         return view('user.members', compact('members'));
     }
+    
+    public function updateProfilePhoto(Request $request)
+    {
+        $request->validate([
+            'profile_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
 
+        $users = Auth::guard('web')->user();
+        $file = $request->file('profile_photo');
+        $fileName = time() . '.' . $file->getClientOriginalExtension();
+        $file->move(public_path('profile'), $fileName);
+
+        if ($users->profile_photo && file_exists(public_path('profile/' . $users->profile_photo))) {
+            unlink(public_path('profile/' . $users->profile_photo));
+        }
+
+        $users->profile_photo = $fileName;
+        $users->save();
+
+        return response()->json(['success' => true, 'image_url' => asset('profile/' . $fileName)]);
+    }
+    public function familymembers()
+    {
+        $authuser = Auth::user();
+        $users = User::where('last_name', $authuser->last_name)
+                ->where('approve_status', 1) 
+                // ->where('id', '!=', $authuser->id)
+                ->get();
+
+        return view('user.allmembers', compact('users'));
+
+    }
+    public function membersbyvillage(Request $request)
+    {
+        $search = $request->input('search');
+
+        if ($request->ajax()) {
+            $users = User::when($search, function ($query, $search) {
+                    return $query->where('first_name', 'like', "%{$search}%")
+                                ->orWhere('email', 'like', "%{$search}%")
+                                ->orWhere('ph_no', 'like', "%{$search}%");
+                })
+                ->paginate(10);
+
+            return response()->json([
+                'html' => view('user.partial', compact('users'))->render(),
+                'pagination' => (string) $users->links('pagination::bootstrap-5'),
+            ]);
+        }
+        
+        $authuser = Auth::user();
+        $users = User::
+                // where('c_village', $authuser->c_village)
+                // ->where('c_district', $authuser->c_district)
+                // ->where('c_taluka', $authuser->c_taluka)
+                where('v_village', $authuser->v_village)
+                ->where('v_district', $authuser->v_district)
+                ->where('v_taluka', $authuser->v_taluka)
+                ->where('approve_status', 1) 
+                // ->where('id', '!=', $authuser->id) 
+                ->get();
+
+        return view('user.familybyvillage', compact('users'));
+
+    }
+    public function memberview($id)
+    {
+        $users = User::findOrFail($id);
+        return view('user.particularuser', compact('users'));
+    }
+    public function allmembers(Request $request)
+    {
+        $search = $request->input('search');
+
+        if ($request->ajax()) {
+            $users = User::when($search, function ($query, $search) {
+                    return $query->where('first_name', 'like', "%{$search}%")
+                                ->orWhere('email', 'like', "%{$search}%")
+                                ->orWhere('ph_no', 'like', "%{$search}%");
+                })
+                ->paginate(10);
+
+            return response()->json([
+                'html' => view('user.partial', compact('users'))->render(),
+                'pagination' => (string) $users->links('pagination::bootstrap-5'),
+            ]);
+        }
+
+        $users = User::all();
+        return view('user.allmembers', compact('users'));
+    }
 }

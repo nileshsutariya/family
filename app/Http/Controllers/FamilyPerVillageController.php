@@ -43,6 +43,7 @@ class FamilyPerVillageController extends Controller
             'v_village', 
             'v_district', 
             'v_taluka', 
+            DB::raw('COUNT(DISTINCT IFNULL(elder_ph_no, ph_no)) as family_count'),
             DB::raw('count(*) as total'),
             DB::raw('SUM(v_village IS NOT NULL) as village_user_count'),
             DB::raw('GROUP_CONCAT(id) as user_id')
@@ -52,19 +53,20 @@ class FamilyPerVillageController extends Controller
             'v_district', 'v_taluka')
         ->get();
 
-        $c_villages = User::select( 
-            'c_village', 
-            'c_district', 
-            'c_taluka', 
-            DB::raw('count(*) as total'),
-            DB::raw('SUM(c_village IS NOT NULL) as c_village_user_count'),
-            DB::raw('GROUP_CONCAT(id) as user_id')
-        )
-        ->groupBy(
-            'c_village',
-            'c_district', 'c_taluka')
-        ->get();
+        // $c_villages = User::select( 
+        //     'c_village', 
+        //     'c_district', 
+        //     'c_taluka', 
+        //     DB::raw('COUNT(DISTINCT IFNULL(elder_ph_no, ph_no)) as family_count'),
+        //     DB::raw('count(*) as total'),
+        //     DB::raw('SUM(c_village IS NOT NULL) as c_village_user_count'),
+        //     DB::raw('GROUP_CONCAT(id) as user_id')
+        // )
+        // ->groupBy(
+        //     'c_village',
+        //     'c_district', 'c_taluka')
+        // ->get();
 
-        return view('admin.familypervillage', compact('c_villages', 'v_villages'));
+        return view('admin.familypervillage', compact('v_villages'));
     }
 }

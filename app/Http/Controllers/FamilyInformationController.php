@@ -18,11 +18,11 @@ class FamilyInformationController extends Controller
                   ->where('v_district', $district)
                   ->where('v_taluka', $taluka);
         })
-        ->orWhere(function ($query) use ($village, $district, $taluka) {
-            $query->where('c_village', $village)
-                  ->where('c_district', $district)
-                  ->where('c_taluka', $taluka);
-        })
+        // ->orWhere(function ($query) use ($village, $district, $taluka) {
+        //     $query->where('c_village', $village)
+        //           ->where('c_district', $district)
+        //           ->where('c_taluka', $taluka);
+        // })
         ->get();
     
         return view('admin.familymember', compact('users', 'village', 'district', 'taluka'));

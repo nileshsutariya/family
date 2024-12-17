@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('gender');
-            $table->date('date_of_birth')->nullable();
+            $table->date('date_of_birth');
             $table->string('blood_group');
             $table->string('c_address');
             $table->string('c_district');
@@ -40,10 +40,13 @@ return new class extends Migration
             $table->string('profession');
             $table->string('company_name')->nullable();
             $table->string('business_category')->nullable();
+            $table->string('document_type')->nullable();
+            $table->string('document_upload')->nullable();
+            $table->string('profile_photo')->nullable();
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->foreign('parent_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('role_type')->default(0)->comment('0 is user , 1 is admin');
-            $table->string('approve_status')->default(0)->comment('1 is Approved , 0 is Pending');
+            // $table->string('role_type')->default(0)->comment('0 is user , 1 is admin');
+            $table->string('approve_status')->default(0)->comment('2 is Disapproved, 1 is Approved , 0 is Pending');
             $table->rememberToken();
             $table->timestamps();
         });

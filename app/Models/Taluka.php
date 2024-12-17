@@ -11,4 +11,17 @@ class Taluka extends Model
 
     protected $table = "taluka";
     protected $primaryKey = 'id';
+    protected $fillable = [
+        'district',
+        'taluka'
+    ];
+    public function district()
+    {
+        return $this->belongsTo(District::class, 'district', 'id');
+    }
+
+    public function villages()
+    {
+        return $this->hasMany(Village::class);
+    }
 }

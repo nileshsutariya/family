@@ -15,6 +15,7 @@ class User extends Authenticatable
 
     protected $table = 'users';
     protected $primaryKey = 'id';
+    protected $guard = 'web';
 
     /**
      * The attributes that are mass assignable.
@@ -48,6 +49,10 @@ class User extends Authenticatable
         'profession',
         'company_name',
         'business_category',
+        'profile_photo',
+        'document_type',
+        'document_upload',
+        'approve_status',
         'parent_id',
     ];
     public function users()

@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <title>Family</title>
 
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.css" integrity="sha512-8D+M+7Y6jVsEa7RD6Kv/Z7EImSpNpQllgaEIQAtqHcI0H6F4iZknRj0Nx1DCdB+TwBaS+702BGWYC0Ze2hpExQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" integrity="sha512-wJgJNTBBkLit7ymC6vvzM1EcSWeM9mmOu+1USHaRBbHkm6W9EgM0HY27+UtUaprntaYQJF75rc8gjxllKs5OIQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -15,7 +17,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script> -->
+  <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
   <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
@@ -41,20 +43,43 @@
       <ul class="navbar-nav">
         <li class="nav-item ">
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-          <a href="" class="nav-link">Home</a>
         </li> 
       </ul>
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item d-none d-sm-inline-block float-right">
-          <a href="#" class="btn btn-primary"
-            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            @csrf
-          </form>
+        <li class="nav-item dropdown">
+            <a class="nav-link d-flex align-items-center" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{-- <i class="fas fa-circle-user mt-1 fs-1" style="font-size: 20px;"></i> --}}
+              <span class="ml-1 d-md-inline">{{ Auth::guard('web')->user()->first_name }}</span>
+              {{-- <i class="fas fa-caret-down ml-1"></i> --}}
+              <img src="{{ 
+                Auth::guard('web')->user()->profile_photo 
+                      ? asset('profile/' . Auth::guard('web')->user()->profile_photo) 
+                      : asset('profile/profile (3).jpg') 
+                  }}" alt="User Image" class="img-circle elevation-2 ml-2" style="width: 30px; height: 30px;">
+            
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" style="min-width: 200px;">
+                <a href="{{ route('profile') }}" class="dropdown-item d-flex align-items-center">
+                    <i class="fas fa-user mr-2"></i>
+                    <span>Profile</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item d-flex align-items-center"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <i class="fas fa-sign-out-alt mr-2"></i>
+                    <span>Log Out</span>
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            </div>
         </li>
       </ul>
+      {{-- <a href="#" class="btn btn-primary"
+        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf
+      </form> --}}
     </nav>
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <a href="" class="brand-link text-center ">
@@ -78,29 +103,43 @@
             <li class="nav-item">
               <a href="{{route('family.user')}}" class="nav-link">
                 <i class="nav-icon fa-solid fa-people-roof"></i>
-                <p>Family Members</p>
+                <p>My Family Members</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{route('profile')}}" class="nav-link ">
-                <i class="nav-icon fa-solid fa-user"></i>
-                <p>My Profile</p>
+              <a href="{{route('all.family.members')}}" class="nav-link">
+                <i class="nav-icon fa-solid fa-users"></i>
+                <p>All Family Members</p>
               </a>
             </li>
+            <li class="nav-item">
+              <a href="{{route('members.village')}}" class="nav-link">
+                <i class="nav-icon bi bi-people-fill mr-2"></i>
+                <p>Family by Village</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{route('members.all')}}" class="nav-link">
+                <i class="fa-solid fa-users-between-lines mr-2"></i>
+                <p>All Members</p>
+              </a>
+            </li>
+            
           </ul>
+        </nav>
       </div>
     </aside>
     
     <script>           
-      $(function(){
-        var current = location.pathname;
-        
-        $('#ul li a').each(function(){
-          var a = $(this);
-          if(a.attr('href').indexOf(current) !== -1){
-              a.addClass('active');
-          }
-        });
+      $(function() {
+          var current = location.pathname;
+          
+          $('#ul li a').each(function(){
+              var a = $(this);
+              if(a.attr('href').indexOf(current) !== -1){
+                  a.addClass('active');
+              }
+          });
       });
     </script>
                    
@@ -162,3 +201,5 @@
           });
         </script>
       @endif
+
+      {{-- @shivani_14 --}}

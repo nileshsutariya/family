@@ -16,10 +16,32 @@ class users
      */
     public function handle(Request $request, Closure $next, $role): Response
     {
-        if (Auth::check() && Auth::user()->role_type == $role) {
+        if (Auth::guard('admin')->check()) {
             $response = $next($request);
             return $response->header('Access-Control-Allow-Origin', '*');
         } else {
                 return redirect()->route('login');
-        }}
+        }
+        if (Auth::guard('web')->check()) {
+            $response = $next($request);
+            return $response->header('Access-Control-Allow-Origin', '*');
+        } else {
+                return redirect()->route('login');
+        }
+    }
+
+    // public function handle(Request $request, Closure $next): Response
+    // {
+    //     if (Auth::guard('admin')->check()) {
+    //         $response = $next($request);
+    //         return $response->header('Access-Control-Allow-Origin', '*');
+    //     }
+
+    //     if (Auth::guard('web')->check()) {
+    //         $response = $next($request);
+    //         return $response->header('Access-Control-Allow-Origin', '*');
+    //     }
+
+    //     return redirect()->route('login');
+    // }
 }

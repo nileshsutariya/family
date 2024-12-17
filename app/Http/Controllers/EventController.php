@@ -68,15 +68,15 @@ class EventController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title' => 'required',
-            'event_date' => 'required',
+            'event_date' => 'required|date',
             'event_time' => 'required',
             'event_address' => 'required',
             'organizer' => 'required',
             'event_status' => 'required'
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->messages()], 422);
-        }
+        ])->validate();
+        // if ($validator->fails()) {
+        //     return response()->json(['error' => $validator->messages()], 422);
+        // }
 
         $events = Events::find($id); 
         $users = User::all();
@@ -87,7 +87,7 @@ class EventController extends Controller
         $events->address = $request['event_address'];
         $events->organizer = $request['organizer'];
         $events->notes = $request['notes'];
-        if($banner=$request->file('banner')){
+        if($banner=$request->file('banner')) {
             $imagename= $banner->getClientOriginalName();
             $imagepath='public/image/';
             $banner->move($imagepath,$imagename);

@@ -14,8 +14,8 @@
         </div>
     </div>
 </section>
-<a href="{{route('createevent')}}" class="btn btn-primary mr-3 mb-2 float-sm-right"><i class="fas fa-plus mr-1"></i>Add Event</a>
-<section class="content">
+<a href="{{route('createevent')}}" class="btn btn-primary mr-3 mb-2 float-sm-right btn-sm"><i class="fas fa-plus mr-1"></i>Add Event</a>
+{{-- <section class="content"> --}}
     <div class="container-fluid">
         <div class="table-responsive">
             <table class="table custom-table">
@@ -29,7 +29,7 @@
                         <th>Organizer</th>
                         <th>Notes</th>
                         <th>Status</th>
-                        <th>Actions</th>
+                        <th colspan="2">Actions</th>
                     </tr>
                 </thead>
                 <tbody id="event_table_body">
@@ -60,6 +60,8 @@
                                 <a class="btn btn-sm btn-outline-primary" href="{{ route('event.edit', $event->id) }}">
                                     <i class="fas fa-edit"></i>
                                 </a>
+                            </td>
+                            <td>
                                 <a class="btn btn-sm btn-outline-danger" href="{{ route('event.delete', $event->id) }}">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
@@ -73,7 +75,7 @@
             </div> 
         </div>
     </div>
-</section>
+{{-- </section> --}}
 <script type="text/javascript">
     $(document).on("click", "#eventstatus", function() {
         var id = $(this).attr("data-val");  

@@ -1,4 +1,7 @@
 @include('layouts.userheader')
+<section id="loading">
+    <div id="loading-content"></div>
+</section>
 <section class="content-header">
   <div class="container-fluid">
       <div class="row mb-2">
@@ -160,7 +163,7 @@
                       <label for="c_district">District</label>
                       <select class="form-control select2" name="c_district" id="c_district" style="width: 100%;">
                         <option value="" disabled selected>-- District --</option>
-                        @foreach($districts as $district)
+                        @foreach($cDistricts as $district)
                             <option value="{{ $district->id }}"
                               {{ isset($users->c_district) && $users->c_district == $district->district ? 'selected' : '' }}
                               {{ old('c_district') == $district->id ? 'selected' : '' }}
@@ -179,7 +182,7 @@
                       <label for="c_taluka">Taluka</label>
                       <select class="form-control select2" name="c_taluka" id="c_taluka" style="width: 100%;">
                         <option value="" disabled selected>-- Taluka --</option>
-                        @foreach($talukas as $taluka)
+                        @foreach($cTalukas as $taluka)
                             <option value="{{ $taluka->id }}"
                               {{ old('c_taluka') == $taluka->id ? 'selected' : '' }}
                               {{ isset($users->c_taluka) && $users->c_taluka == $taluka->taluka ? 'selected' : '' }}
@@ -198,7 +201,7 @@
                       <label for="c_village">Village</label>
                       <select class="form-control select2" name="c_village" id="c_village" style="width: 100%;">
                         <option value="" disabled selected>-- Village --</option>
-                        @foreach($villages as $village)
+                        @foreach($cVillages as $village)
                             <option value="{{ $village->id }}" 
                               {{ old('c_village') == $village->id ? 'selected' : '' }}
                               {{ isset($users->c_village) && $users->c_village == $village->village ? 'selected' : '' }}
@@ -220,9 +223,9 @@
                     </div>
                     <div class="col-md-3"> 
                       <label for="v_district">District</label>
-                      <select class="form-control select2" name="c_district" id="c_district" style="width: 100%;">
+                      <select class="form-control select2" name="v_district" id="v_district" style="width: 100%;">
                         <option value="" disabled selected>-- District --</option>
-                        @foreach($districts as $district)
+                        @foreach($vDistricts as $district)
                             <option value="{{ $district->id }}"
                               {{ isset($users->v_district) && $users->v_district == $district->district ? 'selected' : '' }}
                               {{ old('v_district') == $district->id ? 'selected' : '' }}
@@ -239,15 +242,15 @@
                     </div>
                     <div class="col-md-3"> 
                       <label for="v_taluka">Taluka</label>
-                      <select class="form-control select2" name="c_taluka" id="c_taluka" style="width: 100%;">
+                      <select class="form-control select2" name="v_taluka" id="v_taluka" style="width: 100%;">
                         <option value="" disabled selected>-- Taluka --</option>
-                        @foreach($talukas as $taluka)
+                        @foreach($vTalukas as $taluka)
                             <option value="{{ $taluka->id }}"
                               {{ old('v_taluka') == $taluka->id ? 'selected' : '' }}
                               {{ isset($users->v_taluka) && $users->v_taluka == $taluka->taluka ? 'selected' : '' }}
                               >
                                 {{ $taluka->taluka }}
-                            </option>
+                            </option>xz
                         @endforeach
                       </select>
                       @error('v_taluka')
@@ -258,17 +261,16 @@
                     </div>
                     <div class="col-md-3">
                       <label for="v_village">Village</label>
-                      <select class="form-control select2" name="c_village" id="c_village" style="width: 100%;">
+                      <select class="form-control select2" name="v_village" id="v_village" style="width: 100%;">
                         <option value="" disabled selected>-- Village --</option>
-                        @foreach($villages as $village)
+                        @foreach($vVillages as $village)
                             <option value="{{ $village->id }}" 
-                              {{ old('v_village') == $village->id ? 'selected' : '' }}
-                              {{ isset($users->v_village) && $users->v_village == $village->village ? 'selected' : '' }}
-                              >
+                                {{ old('v_village') == $village->id ? 'selected' : '' }}
+                                {{ isset($users->v_village) && $users->v_village == $village->village ? 'selected' : '' }}>
                                 {{ $village->village }}
                             </option>
                         @endforeach
-                      </select>
+                    </select>
                       @error('v_village')
                           <span class="text-danger">
                               {{$message}}
@@ -327,6 +329,66 @@
   </div>
 </section>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+{{-- <script>
+    
+    $(document).ready(function() {
+        $('#loading').addClass('loading');
+        $('#loading-content').addClass('loading-content');
+
+        // When the district is changed, load the corresponding talukas
+        $('#district').change(function() {
+            var districtId = $(this).val();
+
+            if (districtId) {
+                // Fetch talukas based on selected district
+                $.ajax({
+                    url: '{{ route('taluka.suggestions') }}', 
+                    type: 'GET',
+                    data: { district: districtId },
+                    dataType: 'json',
+                    success: function(data) {
+                        $('#taluka').empty().append('<option value="" disabled selected>-- Select Taluka --</option>');
+                        
+                        $.each(data, function(index, taluka) {
+                            $('#taluka').append('<option value="' + taluka.id + '">' + taluka.taluka + '</option>');
+                        });
+
+                        $('#village').empty().append('<option value="" disabled selected>-- Select Village --</option>');
+                    }
+                });
+            } else {
+                $('#taluka').empty().append('<option value="" disabled selected>-- Select Taluka --</option>');
+                $('#village').empty().append('<option value="" disabled selected>-- Select Village --</option>');
+            }
+        });
+
+        $('#taluka').change(function() {
+            var talukaId = $(this).val();
+
+            if (talukaId) {
+                $.ajax({
+                    url: '{{ route('village.suggestions') }}', 
+                    type: 'GET',
+                    data: { taluka: talukaId },
+                    dataType: 'json',
+                    success: function(data) {
+                        $('#village').empty().append('<option value="" disabled selected>-- Select Village --</option>');
+                        
+                        $.each(data, function(index, village) {
+                            $('#village').append('<option value="' + village.id + '">' + village.village + '</option>');
+                            // $('#loading').removeClass('loading');
+                            // $('#loading-content').removeClass('loading-content');
+                        });
+                    }
+                });
+            } else {
+                $('#village').empty().append('<option value="" disabled selected>-- Select Village --</option>');
+            }
+        });
+    });
+</script> --}}
+
 
 <script>
   $(document).ready(function () {

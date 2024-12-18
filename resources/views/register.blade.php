@@ -11,10 +11,42 @@
   <link rel="stylesheet" href="{{asset('plugins/select2/css/select2.min.css')}}">
   <link rel="stylesheet" href="{{asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
   
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.css" integrity="sha512-8D+M+7Y6jVsEa7RD6Kv/Z7EImSpNpQllgaEIQAtqHcI0H6F4iZknRj0Nx1DCdB+TwBaS+702BGWYC0Ze2hpExQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" integrity="sha512-wJgJNTBBkLit7ymC6vvzM1EcSWeM9mmOu+1USHaRBbHkm6W9EgM0HY27+UtUaprntaYQJF75rc8gjxllKs5OIQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script> 
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.27/dist/sweetalert2.all.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.27/dist/sweetalert2.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/jqvmap/jqvmap.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/daterangepicker/daterangepicker.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}">
+
+
+  
  <style>
     body {
       background: #f7f9fc;
-      font-family: 'Poppins', sans-serif;
     }
     .card {
       border-radius: 15px;
@@ -57,37 +89,7 @@
     }
     .conditional-field {
       display: none;
-    }
-        .upload-container {
-            border: 2px dashed #d1e3f8;
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            /* max-width: 400px;
-            margin: 5px; */
-        }
-        .upload-container .btn-browse {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 16px;
-        }
-        .upload-container .btn-browse:hover {
-            background-color: #0056b3;
-            margin-bottom: 5px;
-        }
-        .upload-container .upload-icon {
-            font-size: 40px;
-            color: #007bff;
-            margin-bottom: 10px;
-        }
-        .upload-container .file-info {
-            color: #ff0000;
-            font-size: 14px;
-            margin-top: 20px;
-        }
+    }  
   </style>
 </head>
 <body>
@@ -330,7 +332,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>District</label>
+                                            <label class="form-label"><h6>District</h6></label>
                                             <select class="form-control select2" name="c_district" id="c_district" style="width: 100%;">
                                                 <option value="" disabled selected>-- District --</option>
                                                 @foreach($districts as $value)
@@ -339,11 +341,16 @@
                                                     </option>
                                                 @endforeach
                                             </select>
+                                            @error('c_district')
+                                                <span class="text-danger">
+                                                    {{$message}}
+                                                </span>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Taluka</label>
+                                            <label class="form-label"><h6>Taluka</h6></label>
                                             <select class="form-control select2" name="c_taluka" id="c_taluka" style="width: 100%;">
                                                 <option value="" disabled selected>-- Taluka --</option>
                                                 @foreach($talukas as $value)
@@ -352,11 +359,16 @@
                                                     </option>
                                                 @endforeach
                                             </select>
+                                            @error('c_taluka')
+                                                <span class="text-danger">
+                                                    {{$message}}
+                                                </span>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Village</label>
+                                            <label class="form-label"><h6>Village</h6></label>
                                             <select class="form-control select2" name="c_village" id="c_village" style="width: 100%;">
                                                 <option value="" disabled selected>-- Village --</option>
                                                 @foreach($villages as $value)
@@ -365,6 +377,11 @@
                                                     </option>
                                                 @endforeach
                                             </select>
+                                            @error('c_village')
+                                                <span class="text-danger">
+                                                    {{$message}}
+                                                </span>
+                                            @enderror
                                         </div>
                                     </div>
                                     
@@ -506,7 +523,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-12 mt-2">
-                                        <label for="profile" class="form-label">Profile Photo</label>
+                                        <label for="profile" class="form-label"><h6>Profile Photo</h6></label>
                                         <input type="file" class="form-control" id="profile_photo" name="profile_photo" value="{{old('profile_photo')}}">
                                     </div>
                                     <div class="col-md-12 mt-2">

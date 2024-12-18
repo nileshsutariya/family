@@ -157,70 +157,124 @@
                       <input type="text" name="c_address" class="form-control" id="c_address" aria-describeby="usernameHelp" value="{{$admin->c_address}}">
                     </div>
                     <div class="col-md-3"> 
-                      <label for="c_district">District</label>
-                      <input type="text" name="c_district" class="form-control" id="c_district" placeholder="Enter District" value="{{$admin->c_district}}">
-                      <ul id="c_district_suggestions" class="list-group mt-2"></ul>
-                      @error('c_district')
-                          <span class="text-danger">
-                              {{$message}}
-                          </span>
-                      @enderror
-                    </div>
-                    <div class="col-md-3"> 
-                      <label for="c_taluka">Taluka</label>
-                      <input type="text" name="c_taluka" class="form-control" id="c_taluka" placeholder="Enter Taluka" value="{{$admin->c_taluka}}">
-                      <ul id="c_taluka_suggestions" class="list-group mt-2"></ul>
-                      @error('c_taluka')
-                          <span class="text-danger">
-                              {{$message}}
-                          </span>
-                      @enderror
-                    </div>
-                    <div class="col-md-3">
-                      <label for="c_village">Village</label>
-                      <input type="text" name="c_village" class="form-control" id="c_village" placeholder="Enter Village" value="{{$admin->c_village}}">
-                      <ul id="c_village_suggestions" class="list-group mt-2"></ul>
-                      @error('c_village')
-                          <span class="text-danger">
-                              {{$message}}
-                          </span>
-                      @enderror
-                    </div>
+                        <label for="c_district">District</label>
+                        <select class="form-control select2" name="c_district" id="c_district" style="width: 100%;">
+                          <option value="" disabled selected>-- District --</option>
+                          @foreach($cDistricts as $district)
+                              <option value="{{ $district->id }}"
+                                {{ isset($admin->c_district) && $admin->c_district == $district->district ? 'selected' : '' }}
+                                {{ old('c_district') == $district->id ? 'selected' : '' }}
+                                >
+                                  {{ $district->district }}
+                              </option>
+                          @endforeach
+                        </select>
+                        @error('c_district')
+                            <span class="text-danger">
+                                {{$message}}
+                            </span>
+                        @enderror
+                      </div>
+                      <div class="col-md-3"> 
+                        <label for="c_taluka">Taluka</label>
+                        <select class="form-control select2" name="c_taluka" id="c_taluka" style="width: 100%;">
+                          <option value="" disabled selected>-- Taluka --</option>
+                          @foreach($cTalukas as $taluka)
+                              <option value="{{ $taluka->id }}"
+                                {{ old('c_taluka') == $taluka->id ? 'selected' : '' }}
+                                {{ isset($admin->c_taluka) && $admin->c_taluka == $taluka->taluka ? 'selected' : '' }}
+                                >
+                                  {{ $taluka->taluka }}
+                              </option>
+                          @endforeach
+                        </select>
+                        @error('c_taluka')
+                            <span class="text-danger">
+                                {{$message}}
+                            </span>
+                        @enderror
+                      </div>
+                      <div class="col-md-3">
+                        <label for="c_village">Village</label>
+                        <select class="form-control select2" name="c_village" id="c_village" style="width: 100%;">
+                          <option value="" disabled selected>-- Village --</option>
+                          @foreach($cVillages as $village)
+                              <option value="{{ $village->id }}" 
+                                {{ old('c_village') == $village->id ? 'selected' : '' }}
+                                {{ isset($admin->c_village) && $admin->c_village == $village->village ? 'selected' : '' }}
+                                >
+                                  {{ $village->village }}
+                              </option>
+                          @endforeach
+                        </select>
+                        @error('c_village')
+                            <span class="text-danger">
+                                {{$message}}
+                            </span>
+                        @enderror
+                      </div>
                     <h5 class="mt-2">Village Address</h5>
                     <div class="col-md-3">
                       <label for="v_address">Address</label>
                       <input type="text" name="v_address" class="form-control" id="Inputuser1" aria-describeby="usernameHelp" value="{{$admin->v_address}}">
                     </div>
                     <div class="col-md-3"> 
-                      <label for="v_district">District</label>
-                      <input type="text" name="v_district" class="form-control" id="v_district" placeholder="Enter District" value="{{$admin->v_district}}">
-                      <ul id="v_district_suggestions" class="list-group mt-2"></ul>
-                      @error('v_district')
-                          <span class="text-danger">
-                              {{$message}}
-                          </span>
-                      @enderror
-                    </div>
-                    <div class="col-md-3"> 
-                      <label for="v_taluka">Taluka</label>
-                      <input type="text" name="v_taluka" class="form-control" id="v_taluka" placeholder="Enter Taluka" value="{{$admin->v_taluka}}">
-                      <ul id="v_taluka_suggestions" class="list-group mt-2"></ul>
-                      @error('v_taluka')
-                          <span class="text-danger">
-                              {{$message}}
-                          </span>
-                      @enderror
-                    </div>
-                    <div class="col-md-3">
-                      <label for="v_village">Village</label>
-                      <input type="text" name="v_village" class="form-control" id="v_village" placeholder="Enter Village" value="{{$admin->v_village}}">
-                      <ul id="v_village_suggestions" class="list-group mt-2"></ul>
-                      @error('v_village')
-                          <span class="text-danger">
-                              {{$message}}
-                          </span>
-                      @enderror         
-                    </div>
+                        <label for="v_district">District</label>
+                        <select class="form-control select2" name="v_district" id="v_district" style="width: 100%;">
+                          <option value="" disabled selected>-- District --</option>
+                          @foreach($vDistricts as $district)
+                              <option value="{{ $district->id }}"
+                                {{ isset($admin->v_district) && $admin->v_district == $district->district ? 'selected' : '' }}
+                                {{ old('v_district') == $district->id ? 'selected' : '' }}
+                                >
+                                  {{ $district->district }}
+                              </option>
+                          @endforeach
+                        </select>
+                        @error('v_district')
+                            <span class="text-danger">
+                                {{$message}}
+                            </span>
+                        @enderror
+                      </div>
+                      <div class="col-md-3"> 
+                        <label for="v_taluka">Taluka</label>
+                        <select class="form-control select2" name="v_taluka" id="v_taluka" style="width: 100%;">
+                          <option value="" disabled selected>-- Taluka --</option>
+                          @foreach($vTalukas as $taluka)
+                              <option value="{{ $taluka->id }}"
+                                {{ old('v_taluka') == $taluka->id ? 'selected' : '' }}
+                                {{ isset($admin->v_taluka) && $admin->v_taluka == $taluka->taluka ? 'selected' : '' }}
+                                >
+                                  {{ $taluka->taluka }}
+                              </option>xz
+                          @endforeach
+                        </select>
+                        @error('v_taluka')
+                            <span class="text-danger">
+                                {{$message}}
+                            </span>
+                        @enderror
+                      </div>
+                      <div class="col-md-3">
+                        <label for="v_village">Village</label>
+                        <select class="form-control select2" name="v_village" id="v_village" style="width: 100%;">
+                          <option value="" disabled selected>-- Village --</option>
+                          @foreach($vVillages as $village)
+                              <option value="{{ $village->id }}" 
+                                  {{ old('v_village') == $village->id ? 'selected' : '' }}
+                                  {{ isset($admin->v_village) && $admin->v_village == $village->village ? 'selected' : '' }}>
+                                  {{ $village->village }}
+                              </option>
+                          @endforeach
+                      </select>
+                        @error('v_village')
+                            <span class="text-danger">
+                                {{$message}}
+                            </span>
+                        @enderror 
+                      </div>
+                      
                     <div class="col-md-12">
                       <label for="education" class="mt-2">Education</label>
                       <input type="text" name="education" class="form-control" id="education" placeholder="Enter Education" value="{{$admin->education}}">
@@ -270,6 +324,129 @@
   </div>
 </section>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#c_district').on('change', function() {
+            let districtId = $(this).val();  
+  
+            if (districtId) {
+                $.ajax({
+                    url: '{{ route('taluka.suggestions') }}',  
+                    type: 'GET',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')  
+                    },
+                    data: {
+                        district: districtId, 
+                    },
+                    success: function(response) {
+                        $('#c_taluka').html('<option value="">-- Taluka --</option>');
+                        response.forEach(function(taluka) {  
+                            $('#c_taluka').append('<option value="' + taluka.id + '">' + taluka.taluka + '</option>');
+                        });
+                    },
+                    error: function() {
+                        alert('An error occurred while fetching the talukas.');
+                    },
+                });
+            } else {
+                $('#c_taluka').html('<option value="">-- Taluka --</option>');
+                $('#c_village').html('<option value="">-- Village --</option>');
+            }
+        });
+  
+        $('#c_taluka').on('change', function() {
+            let talukaId = $(this).val();  
+  
+            if (talukaId) {
+                $.ajax({
+                    url: '{{ route('village.suggestions') }}',  
+                    type: 'GET',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')  
+                    },
+                    data: {
+                        taluka: talukaId,  
+                    },
+                    success: function(response) {
+                        $('#c_village').html('<option value="">-- Village --</option>');
+                        response.forEach(function(village) {
+                            $('#c_village').append('<option value="' + village.id + '">' + village.village + '</option>');
+                        });
+                    },
+                    error: function() {
+                        alert('An error occurred while fetching the villages.');
+                    },
+                });
+            } else {
+                $('#c_village').html('<option value="">-- Village --</option>');
+            }
+        });
+    });
+  </script>
+  
+  <script>
+    $(document).ready(function() {
+        $('#v_district').on('change', function() {
+            let districtId = $(this).val();  
+  
+            if (districtId) {
+                $.ajax({
+                    url: '{{ route('taluka.suggestions') }}',  
+                    type: 'GET',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')  
+                    },
+                    data: {
+                        district: districtId, 
+                    },
+                    success: function(response) {
+                        $('#v_taluka').html('<option value="">-- Taluka --</option>');
+                        response.forEach(function(taluka) {  
+                            $('#v_taluka').append('<option value="' + taluka.id + '">' + taluka.taluka + '</option>');
+                        });
+                    },
+                    error: function() {
+                        alert('An error occurred while fetching the talukas.');
+                    },
+                });
+            } else {
+                $('#v_taluka').html('<option value="">-- Taluka --</option>');
+                $('#v_village').html('<option value="">-- Village --</option>');
+            }
+        });
+  
+        $('#v_taluka').on('change', function() {
+            let talukaId = $(this).val();  
+  
+            if (talukaId) {
+                $.ajax({
+                    url: '{{ route('village.suggestions') }}',  
+                    type: 'GET',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')  
+                    },
+                    data: {
+                        taluka: talukaId,  
+                    },
+                    success: function(response) {
+                        $('#v_village').html('<option value="">-- Village --</option>');
+                        response.forEach(function(village) {
+                            $('#v_village').append('<option value="' + village.id + '">' + village.village + '</option>');
+                        });
+                    },
+                    error: function() {
+                        alert('An error occurred while fetching the villages.');
+                    },
+                });
+            } else {
+                $('#v_village').html('<option value="">-- Village --</option>');
+            }
+        });
+    });
+  </script>
+  
 
 {{-- <script>
   $(document).ready(function() {

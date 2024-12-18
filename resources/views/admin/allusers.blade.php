@@ -15,13 +15,13 @@
     </div>
 </section>
 <div class="container-fluid">
-    <div class="container d-flex justify-content-end align-items-end">
+    <div class="container-fluid d-flex justify-content-end align-items-end">
         <div class="input-group mb-2" style="width: 300px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border-radius: 7px;">
-            <input type="text" id="search" class="form-control" placeholder="Search here..." style="border: none; padding: 15px; border-top-left-radius: 7px; border-bottom-left-radius: 7px;">
+            <input type="text" id="search" class="form-control" placeholder="Search here..." style="border: none; padding: 15px; border-top-left-radius: 4px; border-bottom-left-radius: 4px;">
             {{-- <button class="btn btn-primary" type="button" style="border-top-right-radius: 7px; border-bottom-right-radius: 7px;">
                 Search
             </button> --}}
-            <button class="btn btn-primary" id="searchBtn" type="button" style="border-top-right-radius: 7px; border-bottom-right-radius: 7px;">
+            <button class="btn btn-primary" id="searchBtn" type="button" style="border-top-right-radius: 4px; border-bottom-right-radius: 4px;">
                 <i class="fas fa-search"></i>
             </button>
         </div>

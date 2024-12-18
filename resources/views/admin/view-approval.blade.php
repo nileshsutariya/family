@@ -14,7 +14,7 @@
         </div>
     </div>
 </section>
-<a href="{{route('user-approval')}}" class="btn btn-primary ml-4 mt-2"> 
+<a href="{{route('user-approval')}}" class="btn btn-primary btn-sm ml-4 mt-2"> 
     <i class="bi bi-arrow-left me-1"></i> Back
 </a>
 <section class="content">

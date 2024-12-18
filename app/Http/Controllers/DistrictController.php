@@ -25,7 +25,7 @@ class DistrictController extends Controller
     // }
     public function getDistricts()
     {
-        $district = District::all();
-        return view('register', compact('district'));
+        $districts = District::all();
+        return view('register', compact('districts'));
     }
 }

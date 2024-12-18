@@ -104,11 +104,13 @@
         width: 50px;
         height: 50px;
         background-color: #e6f0ff;
+        background-color: rgb(238, 235, 235);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: blue;
+        /* color: blue; */
+        color: #000000;
     }
 
     .card {

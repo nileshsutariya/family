@@ -133,7 +133,6 @@
                     <div class="mb-3 mt-2">
                         <label for="spousename" class="form-label">Husband/Wife Name</label>
                         <input type="text" name="spouse_name" class="form-control" id="spousename" placeholder="Enter Spouse Name" value="{{$users->spouse_name}}">
-                        
                     </div>
                   </div>
                   <div class="col-md-12" class="mt-3">
@@ -149,38 +148,59 @@
                   <div class="col-md-3"> 
                     <label for="c_district">District</label>
                     <select class="form-control select2" name="c_district" id="c_district" style="width: 100%;">
-                        <option value="" disabled selected>-- District --</option>
-                        @foreach($districts as $value)
-                            <option value="{{ $value->id }}" {{ old('c_district') == $value->id ? 'selected' : '' }}>
-                                {{ $value->district }}
-                            </option>
-                        @endforeach
+                      <option value="" disabled selected>-- District --</option>
+                      @foreach($cDistricts as $district)
+                          <option value="{{ $district->id }}"
+                            {{ isset($users->c_district) && $users->c_district == $district->district ? 'selected' : '' }}
+                            {{ old('c_district') == $district->id ? 'selected' : '' }}
+                            >
+                              {{ $district->district }}
+                          </option>
+                      @endforeach
                     </select>
-                    
+                    @error('c_district')
+                        <span class="text-danger">
+                            {{$message}}
+                        </span>
+                    @enderror
                   </div>
                   <div class="col-md-3"> 
                     <label for="c_taluka">Taluka</label>
                     <select class="form-control select2" name="c_taluka" id="c_taluka" style="width: 100%;">
-                        <option value="" disabled selected>-- Taluka --</option>
-                        @foreach($talukas as $value)
-                            <option value="{{ $value->id }}" {{ old('c_taluka') == $value->id ? 'selected' : '' }}>
-                                {{ $value->taluka }}
-                            </option>
-                        @endforeach
+                      <option value="" disabled selected>-- Taluka --</option>
+                      @foreach($cTalukas as $taluka)
+                          <option value="{{ $taluka->id }}"
+                            {{ old('c_taluka') == $taluka->id ? 'selected' : '' }}
+                            {{ isset($users->c_taluka) && $users->c_taluka == $taluka->taluka ? 'selected' : '' }}
+                            >
+                              {{ $taluka->taluka }}
+                          </option>
+                      @endforeach
                     </select>
-                    
+                    @error('c_taluka')
+                        <span class="text-danger">
+                            {{$message}}
+                        </span>
+                    @enderror
                   </div>
                   <div class="col-md-3">
                     <label for="c_village">Village</label>
                     <select class="form-control select2" name="c_village" id="c_village" style="width: 100%;">
-                        <option value="" disabled selected>-- Village --</option>
-                        @foreach($villages as $value)
-                            <option value="{{ $value->id }}" {{ old('c_village') == $value->id ? 'selected' : '' }}>
-                                {{ $value->village }}
-                            </option>
-                        @endforeach
+                      <option value="" disabled selected>-- Village --</option>
+                      @foreach($cVillages as $village)
+                          <option value="{{ $village->id }}" 
+                            {{ old('c_village') == $village->id ? 'selected' : '' }}
+                            {{ isset($users->c_village) && $users->c_village == $village->village ? 'selected' : '' }}
+                            >
+                              {{ $village->village }}
+                          </option>
+                      @endforeach
                     </select>
-                    
+                    @error('c_village')
+                        <span class="text-danger">
+                            {{$message}}
+                        </span>
+                    @enderror
                   </div>
                   <h5 class="mt-3">Village Address</h5>
                   <div class="col-md-3">
@@ -191,39 +211,60 @@
                   <div class="col-md-3"> 
                     <label for="v_district">District</label>
                     <select class="form-control select2" name="v_district" id="v_district" style="width: 100%;">
-                        <option value="" disabled selected>-- District --</option>
-                        @foreach($districts as $value)
-                            <option value="{{ $value->id }}" {{ old('v_district') == $value->id ? 'selected' : '' }}>
-                                {{ $value->district }}
-                            </option>
-                        @endforeach
+                      <option value="" disabled selected>-- District --</option>
+                      @foreach($vDistricts as $district)
+                          <option value="{{ $district->id }}"
+                            {{ isset($users->v_district) && $users->v_district == $district->district ? 'selected' : '' }}
+                            {{ old('v_district') == $district->id ? 'selected' : '' }}
+                            >
+                              {{ $district->district }}
+                          </option>
+                      @endforeach
                     </select>
-                    
+                    @error('v_district')
+                        <span class="text-danger">
+                            {{$message}}
+                        </span>
+                    @enderror
                   </div>
                   <div class="col-md-3"> 
                     <label for="v_taluka">Taluka</label>
                     <select class="form-control select2" name="v_taluka" id="v_taluka" style="width: 100%;">
-                        <option value="" disabled selected>-- Taluka --</option>
-                        @foreach($talukas as $value)
-                            <option value="{{ $value->id }}" {{ old('v_taluka') == $value->id ? 'selected' : '' }}>
-                                {{ $value->taluka }}
-                            </option>
-                        @endforeach
+                      <option value="" disabled selected>-- Taluka --</option>
+                      @foreach($vTalukas as $taluka)
+                          <option value="{{ $taluka->id }}"
+                            {{ old('v_taluka') == $taluka->id ? 'selected' : '' }}
+                            {{ isset($users->v_taluka) && $users->v_taluka == $taluka->taluka ? 'selected' : '' }}
+                            >
+                              {{ $taluka->taluka }}
+                          </option>xz
+                      @endforeach
                     </select>
-                    
+                    @error('v_taluka')
+                        <span class="text-danger">
+                            {{$message}}
+                        </span>
+                    @enderror
                   </div>
                   <div class="col-md-3">
                     <label for="v_village">Village</label>
                     <select class="form-control select2" name="v_village" id="v_village" style="width: 100%;">
-                        <option value="" disabled selected>-- Village --</option>
-                        @foreach($villages as $value)
-                            <option value="{{ $value->id }}" {{ old('v_village') == $value->id ? 'selected' : '' }}>
-                                {{ $value->village }}
-                            </option>
-                        @endforeach
-                    </select>
-                      
+                      <option value="" disabled selected>-- Village --</option>
+                      @foreach($vVillages as $village)
+                          <option value="{{ $village->id }}" 
+                              {{ old('v_village') == $village->id ? 'selected' : '' }}
+                              {{ isset($users->v_village) && $users->v_village == $village->village ? 'selected' : '' }}>
+                              {{ $village->village }}
+                          </option>
+                      @endforeach
+                  </select>
+                    @error('v_village')
+                        <span class="text-danger">
+                            {{$message}}
+                        </span>
+                    @enderror 
                   </div>
+                
                   <div class="col-md-12">
                     <label for="education" class="mt-3">Education</label>
                     <input type="text" name="education" class="form-control" id="education" placeholder="Enter Education" value="{{$users->education}}">
@@ -266,7 +307,7 @@
                   </div>
                 </div>
               </div>
-              <button type="submit" class="btn btn-primary btn-block mt-2">Save Changes</button>
+              <button type="submit" class="btn btn-primary btn-block mt-3">Save Changes</button>
             </form>                              
 
           {{-- </div>
@@ -275,6 +316,7 @@
     </div>
   </div>
 </section>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>

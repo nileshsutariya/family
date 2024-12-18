@@ -74,13 +74,57 @@ class AdminController extends Controller
             )
             ->get();
     
-        $districts = District::all();
-        $talukas = Taluka::all();
-        $villages = Village::limit(100)->get();
+            $cDistricts = District::all();
+
+            $selectedCDistrictName = auth()->user()->c_district; 
+            $cDistrict = District::where('district', $selectedCDistrictName)->first();
+    
+            if ($cDistrict) {
+                $cTalukas = Taluka::where('district', $cDistrict->id)->get();
+            } else {
+                $cTalukas = collect(); 
+            }
+    
+            $selectedCTalukaName = auth()->user()->c_taluka; 
+            $cTaluka = Taluka::where('taluka', $selectedCTalukaName)
+                            ->where('district', $cDistrict ? $cDistrict->id : null)
+                            ->first();
+    
+            if ($cTaluka) {
+                $cVillages = Village::where('taluka', $cTaluka->id)
+                                    ->where('district', $cDistrict ? $cDistrict->id : null)
+                                    ->paginate(100);
+            } else {
+                $cVillages = collect(); 
+            }
+    
+            $vDistricts = District::all();
+            $selectedVDistrictName = auth()->user()->v_district; 
+            $vDistrict = District::where('district', $selectedVDistrictName)->first();
+    
+            if ($vDistrict) {
+                $vTalukas = Taluka::where('district', $vDistrict->id)->get();
+            } else {
+                $vTalukas = collect(); 
+            }
+    
+            $selectedVTalukaName = auth()->user()->v_taluka; 
+            $vTaluka = Taluka::where('taluka', $selectedVTalukaName)
+                            ->where('district', $vDistrict ? $vDistrict->id : null)
+                            ->first();
+    
+            if ($vTaluka) {
+                $vVillages = Village::where('taluka', $vTaluka->id)
+                                    ->where('district', $vDistrict ? $vDistrict->id : null)
+                                    ->paginate(100);
+            } else {
+                $vVillages = collect(); 
+            }
+    
         $education = Education::all();
         $business_category = BusinessCategory::all();
         
-        return view('admin.profile', compact('admin', 'districts', 'talukas', 'villages', 'education', 'business_category', 'users'));
+        return view('admin.profile', compact('admin', 'cDistricts', 'cTalukas', 'cVillages','vDistricts','vTalukas','vVillages', 'education', 'business_category', 'users'));
     }
     public function updateprofile(Request $request)
     {
@@ -126,6 +170,14 @@ class AdminController extends Controller
         ])->validate();
 
         $users = Auth::user();
+        $cDistrictName = District::find($request->c_district)->district ?? null;
+        $cTalukaName = Taluka::find($request->c_taluka)->taluka ?? null;
+        $cVillageName = Village::find($request->c_village)->village ?? null;
+    
+        $vDistrictName = District::find($request->v_district)->district ?? null;
+        $vTalukaName = Taluka::find($request->v_taluka)->taluka ?? null;
+        $vVillageName = Village::find($request->v_village)->village ?? null;
+    
         $users->first_name = $request['first_name'];
         $users->father_name = $request['father_name'];
         $users->mother_name = $request['mother_name'];
@@ -138,13 +190,13 @@ class AdminController extends Controller
         $users->spouse_name = $request['spouse_name'];
         $users->email = $request['email'];
         $users->c_address = $request['c_address'];
-        $users->c_district = $request['c_district'];
-        $users->c_taluka = $request['c_taluka'];
-        $users->c_village = $request['c_village'];
+        $users->c_district = $cDistrictName; 
+        $users->c_taluka = $cTalukaName;    
+        $users->c_village = $cVillageName;  
         $users->v_address = $request['v_address'];
-        $users->v_district = $request['v_district'];
-        $users->v_taluka = $request['v_taluka'];
-        $users->v_village = $request['v_village'];
+        $users->v_district = $vDistrictName; 
+        $users->v_taluka = $vTalukaName;    
+        $users->v_village = $vVillageName; 
         $users->education = $request['education'];
         $users->profession = $request['profession'];
         $users->company_name = $request['company_name'];
@@ -231,7 +283,11 @@ class AdminController extends Controller
 
     public function addadmin()
     {
-        return view('admin.add-admin');
+        $districts = District::all();
+        $talukas = Taluka::all();
+        $villages = Village::limit(100)->get();
+
+        return view('admin.add-admin', compact('districts', 'talukas','villages'));
     }
     public function storeaddadmin(Request $request)
     {
@@ -310,6 +366,14 @@ class AdminController extends Controller
             $documentUploadName = null;
         }
         
+        $c_district_name = District::where('id', $request->c_district)->value('district');
+        $c_taluka_name = Taluka::where('id', $request->c_taluka)->value('taluka');
+        $c_village_name = Village::where('id', $request->c_village)->value('village');
+        $v_district_name = District::where('id', $request->v_district)->value('district');
+        $v_taluka_name = Taluka::where('id', $request->v_taluka)->value('taluka');
+        $v_village_name = Village::where('id', $request->v_village)->value('village');    
+
+
         $admin = Admin::updateOrCreate(
             ['ph_no' => $request->ph_no], 
             [
@@ -328,13 +392,13 @@ class AdminController extends Controller
                 'date_of_birth' => $request->date_of_birth,
                 'blood_group' => $request->blood_group,
                 'c_address' => $request->c_address,
-                'c_district' => $request->c_district,
-                'c_taluka' => $request->c_taluka,
-                'c_village' => $request->c_village,
+                'c_district' => $c_district_name,
+                'c_taluka' => $c_taluka_name,
+                'c_village' => $c_village_name,
                 'v_address' => $request->v_address,
-                'v_district' => $request->v_district,
-                'v_taluka' => $request->v_taluka,
-                'v_village' => $request->v_village,
+                'v_district' => $v_district_name,
+                'v_taluka' => $v_taluka_name,
+                'v_village' => $v_village_name,
                 'education' => $request->education,
                 'profession' => $request->profession,
                 'company_name' => $request->company_name,
@@ -345,7 +409,7 @@ class AdminController extends Controller
                 'parent_id' => $parentid,
             ]
         );
-        return redirect()->route('login')->with('store', 'Registration Successful!!'); 
+        return redirect()->route(route: 'login')->with('store', 'Registration Successful!!'); 
     }
     public function allusers(Request $request)
     {
@@ -406,12 +470,57 @@ class AdminController extends Controller
             )
             ->get();
 
-        $districts = District::all();
-        $talukas = Taluka::all();
-        $villages = Village::limit(100)->get();
+            $cDistricts = District::all();
+
+            $selectedCDistrictName = $users->c_district;
+
+            $cDistrict = District::where('district', $selectedCDistrictName)->first();
+    
+            if ($cDistrict) {
+                $cTalukas = Taluka::where('district', $cDistrict->id)->get();
+            } else {
+                $cTalukas = collect(); 
+            }
+    
+            $selectedCTalukaName = $users->c_taluka; 
+            $cTaluka = Taluka::where('taluka', $selectedCTalukaName)
+                            ->where('district', $cDistrict ? $cDistrict->id : null)
+                            ->first();
+    
+            if ($cTaluka) {
+                $cVillages = Village::where('taluka', $cTaluka->id)
+                                    ->where('district', $cDistrict ? $cDistrict->id : null)
+                                    ->paginate(100);
+            } else {
+                $cVillages = collect(); 
+            }
+    
+            $vDistricts = District::all();
+            $selectedVDistrictName = $users->v_district; 
+            $vDistrict = District::where('district', $selectedVDistrictName)->first();
+    
+            if ($vDistrict) {
+                $vTalukas = Taluka::where('district', $vDistrict->id)->get();
+            } else {
+                $vTalukas = collect(); 
+            }
+    
+            $selectedVTalukaName = $users->v_taluka; 
+            $vTaluka = Taluka::where('taluka', $selectedVTalukaName)
+                            ->where('district', $vDistrict ? $vDistrict->id : null)
+                            ->first();
+    
+            if ($vTaluka) {
+                $vVillages = Village::where('taluka', $vTaluka->id)
+                                    ->where('district', $vDistrict ? $vDistrict->id : null)
+                                    ->paginate(100);
+            } else {
+                $vVillages = collect(); 
+            }
+    
         $education = Education::all();
         $business_category = BusinessCategory::all();
-        return view('admin.editmembers',compact('user', 'users','districts','talukas','villages','education','business_category'));
+        return view('admin.editmembers',compact('user', 'users','cDistricts','cTalukas','cVillages','vDistricts','vTalukas','vVillages','education','business_category'));
     }
     public function updatemember(Request $request)
     {
@@ -458,6 +567,13 @@ class AdminController extends Controller
         ])->validate();
 
         $users = User::find($request->id); 
+        $cDistrictName = District::find($request->c_district)->district ?? null;
+        $cTalukaName = Taluka::find($request->c_taluka)->taluka ?? null;
+        $cVillageName = Village::find($request->c_village)->village ?? null;
+    
+        $vDistrictName = District::find($request->v_district)->district ?? null;
+        $vTalukaName = Taluka::find($request->v_taluka)->taluka ?? null;
+        $vVillageName = Village::find($request->v_village)->village ?? null;
         $users->first_name = $request['first_name'];
         $users->father_name = $request['father_name'];
         $users->mother_name = $request['mother_name'];
@@ -469,13 +585,13 @@ class AdminController extends Controller
         $users->date_of_birth = $request['date_of_birth'];
         $users->blood_group = $request['blood_group'];
         $users->c_address = $request['c_address'];
-        $users->c_district = $request['c_district'];
-        $users->c_taluka = $request['c_taluka'];
-        $users->c_village = $request['c_village'];
+        $users->c_district = $cDistrictName; 
+        $users->c_taluka = $cTalukaName;    
+        $users->c_village = $cVillageName;  
         $users->v_address = $request['v_address'];
-        $users->v_district = $request['v_district'];
-        $users->v_taluka = $request['v_taluka'];
-        $users->v_village = $request['v_village'];
+        $users->v_district = $vDistrictName; 
+        $users->v_taluka = $vTalukaName;    
+        $users->v_village = $vVillageName; 
         $users->education = $request['education'];
         $users->profession = $request['profession'];
         $users->company_name = $request['company_name'];

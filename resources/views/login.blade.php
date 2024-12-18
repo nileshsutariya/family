@@ -41,7 +41,7 @@
           </div>
           <button type="Sign in" class="btn btn-primary btn-block mt-2">Sign In</button>
           <div class="form-footer text-center mt-2">
-            <p> Don't have an account? <a href="{{route('register')}}">Sign Up</a></p>
+            <p> Don't have an account? <a href="{{route('register')}}" style="text-decoration: none;">Sign Up</a></p>
           </div>
         </form>
       </section>

@@ -71,7 +71,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> --}}
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.27/dist/sweetalert2.all.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.27/dist/sweetalert2.min.css" rel="stylesheet">
@@ -96,17 +95,26 @@
         <li class="nav-item dropdown">
             <a class="nav-link d-flex align-items-center" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="ml-1 d-md-inline">{{ Auth::guard('admin')->user()->first_name }}</span>
-              {{-- <img src="{{ asset('profile/' . Auth::guard('admin')->user()->profile_photo) }}" alt="User Image" 
-                class="img-circle elevation-2 ml-2" 
-                style="width: 30px; height: 30px;"> --}}
-                {{-- <i class="fas fa-caret-down ml-1"></i> --}}
-                <img src="{{ 
-                  Auth::guard('admin')->user()->profile_photo 
-                        ? asset('profile/' . Auth::guard('admin')->user()->profile_photo) 
-                        : asset('profile/profile (3).jpg') 
-                    }}" alt="User Image" class="img-circle elevation-2 ml-2" style="width: 30px; height: 30px;">
-              
-            </a>
+                @php
+                    $firstName = ucfirst(Auth::guard('admin')->user()->first_name ?? '');
+                    $lastName = ucfirst(Auth::guard('admin')->user()->last_name ?? '');
+                    $initials = strtoupper(substr($firstName, 0, 1) . substr($lastName, 0, 1));
+
+                    $profilePhoto = Auth::guard('admin')->user()->profile_photo
+                        ? asset('profile/' . Auth::guard('admin')->user()->profile_photo)
+                        : Avatar::create($initials)
+                            ->setDimension(35, 35)
+                            ->setFontSize(15)
+                            ->toSvg();
+                @endphp
+                <img 
+                    src="{{ Auth::guard('admin')->user()->profile_photo ? asset('profile/' . Auth::guard('admin')->user()->profile_photo) : 'data:image/svg+xml;base64,' . base64_encode($profilePhoto) }}" 
+                    alt="User Image" 
+                    class="rounded-circle ml-1" 
+                    style="width: 30px; height: 30px; object-fit: cover; border: 2px solid #ccc;" 
+                    id="profile-photo-img">
+
+                  </a>
             <div class="dropdown-menu dropdown-menu-right" style="min-width: 200px;">
                 <a href="{{ route('admin.profile') }}" class="dropdown-item d-flex align-items-center">
                     <i class="fas fa-user mr-2"></i>
@@ -156,7 +164,7 @@
             </li>
             <li class="nav-item">
               <a href="{{route('user-approval')}}" class="nav-link ">
-                <i class="nav-icon bi bi-person-fill-gear mr-2"></i>
+                <i class="nav-icon fa-solid fa-user-gear"></i>
                 <p>Users Approval</p>
               </a>
             </li>
@@ -175,12 +183,12 @@
       $(function(){
         var current = location.pathname;
         
-        $('#ul li a').each(function(){
-          var a = $(this);
-          if(a.attr('href').indexOf(current) !== -1){
-              a.addClass('active');
-          }
-        });
+          $('#ul li a').each(function(){
+              var a = $(this);
+              if(a.attr('href').indexOf(current) !== -1){
+                  a.addClass('active');
+              }
+          });
       });
     </script>
                    

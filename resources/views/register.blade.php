@@ -11,7 +11,6 @@
   <link rel="stylesheet" href="{{asset('plugins/select2/css/select2.min.css')}}">
   <link rel="stylesheet" href="{{asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
   
-
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
   <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
@@ -41,8 +40,6 @@
   <link rel="stylesheet" href="{{ asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/daterangepicker/daterangepicker.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}">
-
-
   
  <style>
     body {
@@ -97,9 +94,7 @@
         <div class="row justify-content-center">
             <div class="col-md-7">
                 <div class="card">
-                    {{-- <div class="card-header text-center" style="border-top-left-radius: 15px; border-top-right-radius: 15px;"> --}}
                         <h3 class="fw-bold mt-4 text-center" style="font-size: 35px;"> Registration </h3>
-                    {{-- </div> --}}
                     <div class="card-body p-4">
                         <div class="progress mb-4">
                             <div class="progress-bar" id="progressBar" role="progressbar" style="width: 33%;" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
@@ -108,7 +103,6 @@
                             @csrf
                             <div class="step active-step">
                                 <div class="step-header">
-                                    {{-- <div class="step-circle">1</div> --}}
                                     <h5 class="fw-bold">Personal Information</h5>
                                 </div>
                                 <div class = "row">
@@ -174,7 +168,6 @@
                             </div>
                             <div class="step">
                                 <div class="step-header">
-                                    {{-- <div class="step-circle">2</div> --}}
                                     <h5 class="fw-bold">Personal Details</h5>
                                 </div>
                                 <div class="row">
@@ -248,14 +241,12 @@
                                         <div class="mb-3">
                                             <label for="spousename" class="form-label"><h6>Husband/ Wife Name</h6></label>
                                             <input type="text" name="spouse_name" class="form-control" id="spousename" placeholder="Enter Spouse Name" value="{{old('spouse_name')}}">
-                                            
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="mb-4 mt-3">
                                             <label for="email" class="form-label"><h6>Email</h6></label>
                                             <input type="email" name="email" class="form-control" id="email" placeholder="Enter Email" value="{{old('email')}}">
-                                            
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -316,14 +307,13 @@
                             </div>
                             <div class="step">
                                 <div class="step-header">
-                                    {{-- <div class="step-circle">3</div> --}}
                                     <h5 class="fw-bold">Resident</h5>
                                 </div>
                                 <div class="row">
                                     <h5>Current Address :</h5>
                                     <div class="mb-3">
                                         <label for="currentaddress" class="form-label"><h6>Address</h6></label>
-                                        <input type="text" name="c_address" class="form-control" id="currentaddress" placeholder="Enter Your Address(Current)" value="{{old('c_address')}}">
+                                        <input type="text" name="c_address" class="form-control" id="currentaddress" placeholder="Enter Address(Current)" value="{{old('c_address')}}">
                                         @error('c_address')
                                             <span class="text-danger">
                                                 {{$message}}
@@ -363,7 +353,7 @@
                                                 <span class="text-danger">
                                                     {{$message}}
                                                 </span>
-                                            @enderror
+                                             @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -384,7 +374,6 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    
                                     <h5 class="mt-3">Village Address :</h5>
                                     <div class="mb-3">
                                         <label for="villageaddress" class="form-label"><h6>Address</h6></label>
@@ -402,7 +391,7 @@
                                                 <option value="" disabled selected>-- District --</option>
                                                 @foreach($districts as $value)
                                                     <option value="{{ $value->id }}" {{ old('v_district') == $value->id ? 'selected' : '' }}>
-                                                        {{ $value->district }}
+                                                         {{ $value->district }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -449,7 +438,6 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    
                                 </div>
                                 <div class="d-flex justify-content-between mt-4">
                                     <button type="button" class="btn btn-outline-secondary" id="prevBtn" onclick="changeStep(-1)">Previous</button>
@@ -458,7 +446,6 @@
                             </div>
                             <div class="step">
                                 <div class="step-header">
-                                    {{-- <div class="step-circle">4</div> --}}
                                     <h5 class="fw-bold">Profession</h5>
                                 </div>
                                 <div class="row">
@@ -522,10 +509,10 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="col-md-12 mt-2">
+                                    {{-- <div class="col-md-12 mt-2">
                                         <label for="profile" class="form-label"><h6>Profile Photo</h6></label>
                                         <input type="file" class="form-control" id="profile_photo" name="profile_photo" value="{{old('profile_photo')}}">
-                                    </div>
+                                    </div> --}}
                                     <div class="col-md-12 mt-2">
                                         <label for="document_type" class="form-label"><h6>Document</h6></label>
                                         <select name="document_type" class="form-control" id="document_type">
@@ -549,25 +536,7 @@
                                                 {{$message}}
                                             </span>
                                         @enderror
-                                        {{-- <div class="upload-container">
-                                            <div class="upload-icon">
-                                                <i class="fas fa-upload"></i>
-                                            </div>
-                                            <a href="javascript:void(0);" class="btn btn-browse" onclick="document.getElementById('document_upload').click();" style="font-size: 14px;">Browse</a> --}}
-
-                                            {{-- <button class="btn btn-browse">Browse</button> --}}
-                                            {{-- <p>drop a file here</p> --}}
-                                            {{-- <p class="file-info">*File supported .png, .jpg & .webp</p> --}}
-                                        {{-- </div> --}}
-                                        {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script> --}}
-                                    
-                                        {{-- @php
-                                            if (isset($users)) {
-                                                echo $id = str_replace('public/profile/', '', $users->profilePhoto);
-                                            }
-                                        @endphp --}}
                                     </div>
-                                    
                                 </div>
                                 <div class="d-flex justify-content-between mt-4">
                                     <button type="button" class="btn btn-outline-secondary" id="prevBtn" onclick="changeStep(-1)">Previous</button>
@@ -708,7 +677,6 @@
         });
     </script>
     
-
     <script>
         $(document).ready(function () {
             function toggleCompanyNameField() {
@@ -719,9 +687,7 @@
                     $('#company-name').hide();
                 }
             }
-    
             $('input[name="profession"]').on('change', toggleCompanyNameField);
-    
             toggleCompanyNameField();
         });
     </script>
@@ -820,12 +786,10 @@
                         $(`#${suggestionsId}`).hide();
                     }
                 });
-    
                 $(document).on('click', `#${suggestionsId} .suggestion-item`, function () {
                     $(`#${inputId}`).val($(this).text());
                     $(`#${suggestionsId}`).hide();
                 });
-    
                 $(document).click(function (e) {
                     if (!$(e.target).closest(`#${inputId}, #${suggestionsId}`).length) {
                         $(`#${suggestionsId}`).hide();
@@ -951,17 +915,18 @@
             progressBar.style.width = `${((currentStepIndex + 1) / steps.length) * 100}%`;
         }
     </script>
-<script src="{{asset('plugins/select2/js/select2.full.min.js')}}"></script>
-<script>
-      $(function () {
-        //Initialize Select2 Elements
-        $('.select2').select2()
 
-        //Initialize Select2 Elements
-        $('.select2bs4').select2({
-        theme: 'bootstrap4'
+    <script src="{{asset('plugins/select2/js/select2.full.min.js')}}"></script>
+    
+    <script>
+        $(function () {
+            $('.select2').select2()
+
+            $('.select2bs4').select2({
+            theme: 'bootstrap4'
+            })
         })
-      })
-</script>
+    </script>
+
 </body>
 </html>

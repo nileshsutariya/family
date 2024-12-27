@@ -30,18 +30,4 @@ class users
         }
     }
 
-    // public function handle(Request $request, Closure $next): Response
-    // {
-    //     if (Auth::guard('admin')->check()) {
-    //         $response = $next($request);
-    //         return $response->header('Access-Control-Allow-Origin', '*');
-    //     }
-
-    //     if (Auth::guard('web')->check()) {
-    //         $response = $next($request);
-    //         return $response->header('Access-Control-Allow-Origin', '*');
-    //     }
-
-    //     return redirect()->route('login');
-    // }
 }

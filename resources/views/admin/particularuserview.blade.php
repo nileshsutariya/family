@@ -178,10 +178,9 @@
                     </div>                                                   
 
                     <div class="col-md-12">
-                        <label for="profile_photo" class="mt-1">Profile Photo</label>
-                        {{-- <div>
-                            <img src="{{ asset('profile/' . $users->profile_photo) }}" id="profile_photo" class="profile_photo" alt="{{ $users->profile_photo }}" style="width: 150px; cursor: pointer; height: auto;" onclick="showImage('{{ asset('profile/' . $users->profile_photo) }}')">
-                        </div> --}}
+                        @if($users->profile_photo !== null)
+                            <label for="profile_photo" class="mt-1">Profile Photo</label>
+                        @endif
                         <div>
                             <span id="profile_photo" style="cursor: pointer; color: rgb(0, 150, 250);" onclick="showImage('{{ asset('profile/' . $users->profile_photo) }}')">
                                 {{ basename($users->profile_photo) }}
@@ -207,9 +206,6 @@
                     </div>
                     <div class="col-md-6">
                         <label for="document_upload" class="mt-1">Document</label>
-                        {{-- <div>
-                            <img src="{{ asset('documents/' . $users->document_upload) }}"  alt="{{ $users->document_upload }}" id="document_upload" class="document_upload" style="width: 150px; cursor: pointer;" onclick="showImage('{{ asset('documents/' . $users->document_upload) }}')">
-                        </div> --}}
                         <div>
                             <span id="document_upload" style="cursor: pointer; color: rgb(0, 150, 250); " onclick="showImage('{{ asset('documents/' . $users->document_upload) }}')">
                                 {{ basename($users->document_upload) }}

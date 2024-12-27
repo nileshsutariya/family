@@ -142,7 +142,7 @@
                         <input type="text" name="education" class="form-control" id="education" placeholder="Enter Education" value="{{$users->education}}" readonly>
                                                            
                     </div>
-                    <div class="col-md-12 mb-2">
+                    <div class="col-md-12">
                         <label for="col-md-12" class="mt-2">Profession</label>
                         <div>
                             <label class="mr-3">
@@ -165,20 +165,19 @@
                     </div>
                     <div class="col-md-12" id="company-name" style="display: none;">
                         <div>
-                            <label for="companyname" class="mt-2">Company Name</label>
+                            <label for="companyname" class="mt-1">Company Name</label>
                             <input type="text" name="company_name" class="form-control company_name" id="company_name" aria-describeby="usernameHelp" value="{{old('company_name', $users->company_name)}}" readonly>
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <label for="businesscategory" class="mt-1">Business Category</label>
+                        <label for="businesscategory" class="mt-2">Business Category</label>
                         <input type="text" name="business_category" class="form-control" id="business_category" placeholder="Enter Business Category" value="{{$users->business_category}}" readonly>                                    
                     </div>                                                   
 
                     <div class="col-md-12">
+                        @if($users->profile_photo !== null)
                         <label for="profile_photo" class="mt-1">Profile Photo</label>
-                        {{-- <div>
-                            <img src="{{ asset('profile/' . $users->profile_photo) }}" id="profile_photo" class="profile_photo" alt="{{ $users->profile_photo }}" style="width: 150px; cursor: pointer; height: auto;" onclick="showImage('{{ asset('profile/' . $users->profile_photo) }}')">
-                        </div> --}}
+                        @endif
                         <div>
                             <span id="profile_photo" style="cursor: pointer; color: rgb(0, 150, 250);" onclick="showImage('{{ asset('profile/' . $users->profile_photo) }}')">
                                 {{ basename($users->profile_photo) }}
@@ -199,14 +198,11 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <label for="document_type" class="mt-1">Document Type</label>
+                        <label for="document_type" class="mt-2">Document Type</label>
                         <input type="text" class="form-control document_type" id="document_type" value="{{$users->document_type}}" readonly>    
                     </div>
                     <div class="col-md-6">
-                        <label for="document_upload" class="mt-1">Document</label>
-                        {{-- <div>
-                            <img src="{{ asset('documents/' . $users->document_upload) }}"  alt="{{ $users->document_upload }}" id="document_upload" class="document_upload" style="width: 150px; cursor: pointer;" onclick="showImage('{{ asset('documents/' . $users->document_upload) }}')">
-                        </div> --}}
+                        <label for="document_upload" class="mt-2">Document</label>
                         <div>
                             <span id="document_upload" style="cursor: pointer; color: rgb(0, 150, 250); " onclick="showImage('{{ asset('documents/' . $users->document_upload) }}')">
                                 {{ basename($users->document_upload) }}

@@ -75,7 +75,6 @@ class AdminController extends Controller
             ->get();
     
             $cDistricts = District::all();
-
             $selectedCDistrictName = auth()->user()->c_district; 
             $cDistrict = District::where('district', $selectedCDistrictName)->first();
     
@@ -236,19 +235,6 @@ class AdminController extends Controller
         $business_category = BusinessCategory::all();
         $users = User::where('approve_status', 0)->get();
            
-        // if ($request->id) {
-        //     $query = User::where('id',$request->id)->first();
-        //     if($query){
-        //         if($query->approve_status == "0") {
-        //             $query->approve_status = "1";
-        //         }
-        //         $query->save();
-
-        //         return response()->json([
-        //             'approve_status' => $query->approve_status
-        //         ]); 
-        //     }
-        // }
         return view('admin.user-approval',compact('users', 'admin', 'district', 'taluka', 'village', 'education', 'business_category'));
     
     }
@@ -429,20 +415,6 @@ class AdminController extends Controller
         $users = User::paginate(10);
         return view('admin.allusers', compact('users'));
     }
-    
-    // public function searchusers(Request $request)
-    // {
-    //     $query = User::query();
-
-    //     if ($request->has('search') && $request->search) {
-    //         $query->where('first_name', 'like', '%' . $request->search . '%')
-    //             ->orWhere('last_name', 'like', '%' . $request->search . '%');
-    //     }
-
-    //     $users = $query->paginate(10);
-
-    //     return view('admin.allusers', compact('users'));
-    // }
 
     public function deletemember($id)
     {
@@ -600,7 +572,6 @@ class AdminController extends Controller
         $users->save();
 
         return redirect()->back()->with('update', 'User Updated Successfully!!');
-        // return redirect()->route('family.village')->with('update', 'User Updated Successfully!!');
     }
     public function search(Request $request)
     {
@@ -621,5 +592,15 @@ class AdminController extends Controller
     {
         $users = User::findOrFail($id);
         return view('admin.particularuserview', compact('users'));
+    }
+    public function removeProfilePhoto(Request $request)
+    {
+        $user = Auth::guard('admin')->user();
+        if ($user) {
+            $user->profile_photo = null; 
+            $user->save();
+        }
+
+        return back()->with('success', 'Profile photo removed successfully.');
     }
 }

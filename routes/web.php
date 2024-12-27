@@ -14,9 +14,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DistrictController;
 
-// Route::get('/welcome', function () {
-//     return view('welcome');
-// });
+
 Route::get('/test',[LoginController::class,'test']);
 Route::get('/', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login-in');
@@ -50,7 +48,8 @@ Route::middleware(['auth:web'])->group(function () {
         Route::get('/profile', [UserController::class, 'profile'])->name('profile');
         Route::post('/profile/update', [UserController::class, 'profileupdate'])->name('profile.update');
         Route::post('/update-profile-photo', [UserController::class, 'updateProfilePhoto'])->name('user.updateProfilePhoto');
-    
+        Route::post('/profile/photo/remove', [UserController::class, 'removeProfilePhoto'])->name('profile.photo.remove');
+
         Route::get('/member/{id}', [UserController::class, 'memberview'])->name('view.particular.member');
 
         Route::get('/members/all', [UserController::class, 'allmembers'])->name('members.all');
@@ -82,6 +81,7 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::get('/adminprofile', [AdminController::class, 'profile'])->name('admin.profile');
         Route::post('/profile/update', [AdminController::class, 'updateprofile'])->name('admin.profile.update');
         Route::post('/update-profile-photo', [AdminController::class, 'updateProfilePhoto'])->name('updateProfilePhoto');
+        Route::post('/profile/remove', [AdminController::class, 'removeProfilePhoto'])->name('admin.profile.remove');
 
         Route::get('/add-event', [EventController::class, 'create'])->name('createevent');
 

@@ -17,12 +17,7 @@
                 <td>{{$user->c_village}}</td>
                 <td>{{$user->v_address}}</td>
                 <td>{{$user->v_village}}</td>
-                {{-- <td>
-                    <a href="{{route('edit.members', $user->id)}}" class="btn btn-sm btn-outline-warning"><i class="fas fa-edit"></i></a>
-                </td>
-                <td>
-                    <a href="{{route('delete.members', $user->id)}}" class="btn btn-outline-danger btn-sm"><i class="fa-solid fa-trash-can"></i></a>
-                </td> --}}
+                
             </tr>
             @endforeach
         </tbody>

@@ -24,7 +24,7 @@
                             @csrf
                             <div class="step active-step">
                                 <div class = "row">
-                                    <div class="col-md-12">
+                                    {{-- <div class="col-md-12">
                                         <label for="" class="mt-3"><h6>Are You an Elder?</h6></label>
                                         <div>
                                             <label class="mr-2">
@@ -56,12 +56,12 @@
                                                 {{$message}}
                                             </span>
                                         @enderror
-                                    </div>
+                                    </div> --}}
                                     <div class="mt-3">
                                         <label for="ph_no" class="form-label">
-                                            <h6>Your Mobile No.</h6>
+                                            <h6>Mobile No.</h6>
                                         </label>
-                                        <input type="text" name="ph_no" id="ph_no" class="form-control" placeholder="Mobile Number" value="{{old('ph_no')}}">
+                                        <input type="text" name="ph_no" id="ph_no" class="form-control" placeholder="Your Mobile Number" value="{{old('ph_no')}}">
                                         @error('ph_no')
                                             <span class="text-danger">
                                                 {{$message}}
@@ -220,7 +220,7 @@
                                     <h5>Current Address :</h5>
                                     <div class="mb-3">
                                         <label for="currentaddress" class="form-label"><h6>Address</h6></label>
-                                        <input type="text" name="c_address" class="form-control" id="currentaddress" placeholder="Enter Your Address(Current)">
+                                        <input type="text" name="c_address" class="form-control" id="currentaddress" placeholder="Enter Your Address(Current)" value="{{old('c_address')}}">
                                         @error('c_address')
                                             <span class="text-danger">
                                                 {{$message}}
@@ -266,7 +266,6 @@
                                             </select>
                                         </div>
                                     </div>
-                                    
                                     <h5 class="mt-3">Village Address :</h5>
                                     <div class="mb-3">
                                         <label for="villageaddress" class="form-label"><h6>Address</h6></label>
@@ -331,7 +330,6 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    
                                 </div>
                             </div>
                             <div class="step">
@@ -339,7 +337,7 @@
                                     <div class="col-md-12">
                                         <div class="mb-3">
                                             <label for="education" class="form-label"><h6>Education</h6></label>
-                                            <input type="text" name="education" class="form-control" id="education" placeholder="Enter Education">
+                                            <input type="text" name="education" class="form-control" id="education" placeholder="Enter Education" value="{{old('education')}}">
                                             <div id="education-suggestions" class="list-group mt-2" style="display: none;"></div>
                                         </div>
                                     </div>
@@ -370,7 +368,7 @@
                                         @enderror
                                         <div class="mb-3 mt-2" id="company-name" style="display: none;">
                                             <label for="company">Company Name</label>
-                                            <input type="text" name="company_name" class="form-control" id="companyname" placeholder="Enter Company Name">
+                                            <input type="text" name="company_name" class="form-control" id="companyname" placeholder="Enter Company Name" value="{{old('company_name')}}">
                                             <ul id="company-suggestions" class="list-group mt-2"></ul>
                                             @error('company_name')
                                                 <span class="text-danger">
@@ -382,7 +380,7 @@
                                     <div class="col-md-12">
                                         <div class="mb-3 mt-3">
                                             <label for="businesscategory" class="form-label"><h6>Business Category</h6></label>
-                                            <input type="text" name="business_category" class="form-control" id="business_category" placeholder="Enter Business Category">
+                                            <input type="text" name="business_category" class="form-control" id="business_category" placeholder="Enter Business Category" value="{{old('business_category')}}">
                                             <div id="business-category-suggestions" class="list-group mt-2">
                                             @error('business_category')
                                                 <span class="text-danger">
@@ -391,12 +389,12 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-md-12 mt-2">
+                                    {{-- <div class="col-md-12 mt-2">
                                         <label for="profile" class="form-label">Profile Photo</label>
                                         <input type="file" class="form-control" id="profile_photo" name="profile_photo">
                                     
-                                    </div>
-                                    <div class="col-md-12 mt-2">
+                                    </div> --}}
+                                    {{-- <div class="col-md-12 mt-2">
                                         <label for="document" class="form-label"><h6>Document</h6></label>
                                         <select name="document" class="form-control" id="document">
                                             <option value="" disabled selected>--  Select Document  --</option>
@@ -419,7 +417,7 @@
                                                 {{$message}}
                                             </span>
                                         @enderror
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 <div class="d-flex justify-content-between mt-4">
                                     <button type="submit" class="btn btn-primary ml-1 btn-block float-end">Submit</button>

@@ -21,19 +21,6 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12 mb-3">
-        {{-- <div class="card shadow" style="border-radius: 10px;"> --}}
-            {{-- <div class="card-header">
-                <div class="text-capitalize">
-                    {{$users->first_name}} Details
-                    <a href="tel:{{ $users->ph_no }}" class="btn btn-primary btn-sm float-end ml-2">
-                        <i class="bi bi-telephone-fill"></i>
-                    </a>
-                    <a href="https://wa.me/{{ $users->ph_no }}" class="btn btn-success btn-sm float-end">
-                        <i class="bi bi-whatsapp"></i>
-                    </a>
-                </div>
-            </div> --}}
-        {{-- <div class="card-body"> --}}
             @if ($errors->any())
               <div class="alert alert-danger text-dark" style="background: rgba(228, 75, 75, 0.2); border:none;">
                 <ul>
@@ -309,9 +296,7 @@
               </div>
               <button type="submit" class="btn btn-primary btn-block mt-3">Save Changes</button>
             </form>                              
-
-          {{-- </div>
-        </div> --}}
+            
       </div>
     </div>
   </div>

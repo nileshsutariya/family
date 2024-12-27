@@ -36,32 +36,6 @@
   <link rel="stylesheet" href="{{ asset('plugins/daterangepicker/daterangepicker.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}">
 
-{{-- <style type="text/css">
-    .loading {
-        z-index: 20;
-        position: absolute;
-        top: 0;
-        left:-5px;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0,0,0,0.4);
-    }
-    .loading-content {
-        position: absolute;
-        border: 16px solid #f3f3f3;
-        border-top: 16px solid #3498db;
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-        top: 40%;
-        left:50%;
-        animation: spin 2s linear infinite;
-    }              
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-</style> --}}
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -75,15 +49,26 @@
       <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown">
             <a class="nav-link d-flex align-items-center" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              {{-- <i class="fas fa-circle-user mt-1 fs-1" style="font-size: 20px;"></i> --}}
               <span class="ml-1 d-md-inline">{{ Auth::guard('web')->user()->first_name }}</span>
-              {{-- <i class="fas fa-caret-down ml-1"></i> --}}
-              <img src="{{ 
-                Auth::guard('web')->user()->profile_photo 
-                      ? asset('profile/' . Auth::guard('web')->user()->profile_photo) 
-                      : asset('profile/profile (3).jpg') 
-                  }}" alt="User Image" class="img-circle elevation-2 ml-2" style="width: 30px; height: 30px;">
-            
+              @php
+                  $firstName = ucfirst(Auth::guard('web')->user()->first_name ?? '');
+                  $lastName = ucfirst(Auth::guard('web')->user()->last_name ?? '');
+                  $initials = strtoupper(substr($firstName, 0, 1) . substr($lastName, 0, 1));
+
+                  $profilePhoto = Auth::guard('web')->user()->profile_photo
+                      ? asset('profile/' . Auth::guard('web')->user()->profile_photo)
+                      : Avatar::create($initials)
+                          ->setDimension(35, 35)
+                          ->setFontSize(15)
+                          ->toSvg();
+              @endphp
+              <img 
+                  src="{{ Auth::guard('web')->user()->profile_photo ? asset('profile/' . Auth::guard('web')->user()->profile_photo) : 'data:image/svg+xml;base64,' . base64_encode($profilePhoto) }}" 
+                  alt="User Image" 
+                  class="rounded-circle ml-1" 
+                  style="width: 30px; height: 30px; object-fit: cover; border: 2px solid #ccc;" 
+                  id="profile-photo-img">
+
             </a>
             <div class="dropdown-menu dropdown-menu-right" style="min-width: 200px;">
                 <a href="{{ route('profile') }}" class="dropdown-item d-flex align-items-center">
@@ -102,11 +87,6 @@
             </div>
         </li>
       </ul>
-      {{-- <a href="#" class="btn btn-primary"
-        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-        @csrf
-      </form> --}}
     </nav>
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <a href="" class="brand-link text-center ">
@@ -228,5 +208,3 @@
           });
         </script>
       @endif
-
-      {{-- @shivani_14 --}}

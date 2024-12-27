@@ -15,7 +15,6 @@
     </div>
 </section>
 <a href="{{route('createevent')}}" class="btn btn-primary mr-3 mb-2 float-sm-right btn-sm"><i class="fas fa-plus mr-1"></i>Add Event</a>
-{{-- <section class="content"> --}}
     <div class="container-fluid">
         <div class="table-responsive">
             <table class="table custom-table">
@@ -75,7 +74,6 @@
             </div> 
         </div>
     </div>
-{{-- </section> --}}
 <script type="text/javascript">
     $(document).on("click", "#eventstatus", function() {
         var id = $(this).attr("data-val");  

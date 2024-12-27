@@ -67,22 +67,6 @@ class UserController extends Controller
         $talukas = Taluka::all();
         $villages = Village::limit(100)->get();
 
-        // print_r($village);
-        // die();
-        // $district = District::all();
-       
-        // $talukas = $request->c_district 
-        //         ? Taluka::where('district', $request->c_district)->get() 
-        //         : collect();
-
-        // print_r($talukas); die;
-        // $villages = $request->district && $request->taluka 
-        //         ? Village::where('district', $request->district)
-        //             ->where('taluka_id', $request->taluka)
-        //             ->get()
-        //         : [];
-
-
         $education = Education::all();
         $business_category = BusinessCategory::all();
 
@@ -359,12 +343,14 @@ class UserController extends Controller
 
         return redirect()->route('family.user')->with('update', 'User Updated Successfully!!');
     }
-    public function view()
-    {
-        $users = User::all();
-        $events= Events::leftJoin('users','users.id','=','events.organizer')->select('events.*','users.first_name as organizer')->get();
-        return view('admin.users', compact('users', 'events'));
-    }
+
+    // public function view()
+    // {
+    //     $users = User::all();
+    //     $events= Events::leftJoin('users','users.id','=','events.organizer')->select('events.*','users.first_name as organizer')->get();
+    //     return view('admin.users', compact('users', 'events'));
+    // }
+
     private function maskEmail($email)
     {
         $parts = explode('@', $email);
@@ -454,24 +440,6 @@ class UserController extends Controller
             'vTalukas', 'vVillages', 'vDistrict', 'vTaluka', 'users', 'user',
         ));
 
-        // $districts = District::all();
-
-        // $userDistrict = auth()->user()->c_district; 
-        // $userTaluka = auth()->user()->c_taluka; 
-        
-        // $talukas = Taluka::where('district', $userDistrict)->get();
-        
-        // $villages = Village::where('district', $userDistrict)
-        //             ->where('taluka', $userTaluka)
-        //             ->get();
-
-        // $talukas = Taluka::all();  
-        // $villages = Village::paginate(100); 
-        
-        
-        // $education = Education::all();
-        // $business_category = BusinessCategory::all();
-        // return view('user.profile', compact('users','user', 'districts', 'talukas', 'villages', 'education', 'business_category'));
     }
     public function profileupdate(Request $request)
     {
@@ -617,7 +585,6 @@ class UserController extends Controller
         $authuser = Auth::user();
         $users = User::where('last_name', $authuser->last_name)
                 ->where('approve_status', 1) 
-                // ->where('id', '!=', $authuser->id)
                 ->get();
 
         return view('user.allmembers', compact('users'));
@@ -642,15 +609,10 @@ class UserController extends Controller
         }
         
         $authuser = Auth::user();
-        $users = User::
-                // where('c_village', $authuser->c_village)
-                // ->where('c_district', $authuser->c_district)
-                // ->where('c_taluka', $authuser->c_taluka)
-                where('v_village', $authuser->v_village)
+        $users = User::where('v_village', $authuser->v_village)
                 ->where('v_district', $authuser->v_district)
                 ->where('v_taluka', $authuser->v_taluka)
                 ->where('approve_status', 1) 
-                // ->where('id', '!=', $authuser->id) 
                 ->get();
 
         return view('user.familybyvillage', compact('users'));
@@ -680,5 +642,16 @@ class UserController extends Controller
 
         $users = User::all();
         return view('user.allmembers', compact('users'));
+    }
+
+    public function removeProfilePhoto(Request $request)
+    {
+        $user = Auth::guard('web')->user();
+        if ($user) {
+            $user->profile_photo = null; 
+            $user->save();
+        }
+
+        return back()->with('success', 'Profile photo removed successfully.');
     }
 }

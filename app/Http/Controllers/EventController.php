@@ -24,9 +24,6 @@ class EventController extends Controller
             'organizer' => 'required',
             'event_status' => 'required'
         ])->validate();
-        // if ($validator->fails()) {
-        //     return response()->json(['error' => $validator->messages()], 422);
-        // }
 
         $events= new Events();
         $events->title = $request['title'];

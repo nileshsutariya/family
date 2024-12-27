@@ -20,9 +20,6 @@
                 <i class="bi bi-whatsapp"></i>
             </a>
         </td>
-        {{-- <td>
-            <a href="{{ route('edit.members', $members->id) }}" class="btn btn-sm btn-outline-warning"><i class="fas fa-edit"></i></a>
-        </td> --}}
         <td>
             <a href="{{ route('delete.members', $members->id) }}" class="btn btn-outline-danger btn-sm"><i class="fa-solid fa-trash-can"></i></a>
         </td>

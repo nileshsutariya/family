@@ -27,14 +27,6 @@ class Events extends Model
     
 }
 
-
-
-
-
-
-
-
-
     // public function scopeThisWeek($query)
     // {
     //     $today = Carbon::today();

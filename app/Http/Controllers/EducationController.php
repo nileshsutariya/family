@@ -12,8 +12,8 @@ class EducationController extends Controller
         $query = $request->get('query'); 
 
         $suggestions = Education::where('education', 'like', "{$query}%") 
-                                // ->limit(10) 
                                 ->pluck('education');
+                                
         if ($suggestions->isEmpty()) {
             return response()->json([]);
         }

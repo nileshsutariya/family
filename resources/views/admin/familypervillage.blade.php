@@ -53,47 +53,12 @@
                 </a>
             </div>
             @endforeach
-            {{-- @foreach ($c_villages as $user)
-            <div class="col-12 col-sm-6 col-md-4 mb-4">
-                <a href="{{ route('family.members', ['village' => $user->c_village, 'district' => $user->c_district, 'taluka' => $user->c_taluka]) }}">
-                    <div class="card shadow-sm p-2 text-center hover-card">
-                        <div class="d-flex justify-content-center align-items-center mb-2">
-                            <div class="circle">
-                                <i class="fas fa-map-marker-alt" style="font-size: 24px;"></i>
-                            </div>
-                        </div>
-                        <h5>Village : {{ $user->c_village }}</h5>
-                        <div class="row mb-2">
-                            <div class="col-6">
-                                Taluka : <span class="text-muted">{{ $user->c_taluka }}</span>
-                            </div>
-                            <div class="col-6">
-                                District : <span class="text-muted">{{ $user->c_district }}</span>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-between border-top pt-2">
-                            <div class="stat text-center">
-                                <i class="fas fa-users"></i>
-                                <p class="text-muted mb-1">Total Members</p>
-                                <h5>{{ $user->c_village_user_count }}</h5>
-                            </div>
-                            <div class="stat text-center">
-                                <i class="fas fa-user"></i>
-                                <p class="text-muted mb-1">Family</p>
-                                <h5>{{ $user->family_count }}</h5>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            @endforeach --}}
 
         </div>
     </div>
 </section>
 
 @include('layouts.footer')
-
 
 <style>
     body {
@@ -103,13 +68,11 @@
     .circle {
         width: 50px;
         height: 50px;
-        background-color: #e6f0ff;
         background-color: rgb(238, 235, 235);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        /* color: blue; */
         color: #000000;
     }
 

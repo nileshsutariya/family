@@ -12,7 +12,6 @@ class CompanyController extends Controller
         $query = $request->get('query'); 
 
         $suggestions = Company::where('company_name', 'like', "{$query}%") 
-                                // ->limit(10) 
                                 ->pluck('company_name');
 
         return response()->json($suggestions);
